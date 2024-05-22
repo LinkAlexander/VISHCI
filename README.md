@@ -1,7 +1,7 @@
 # How to get it running
 Clone Repository
 ```bash
-git clone https://github.com/LandstreicherJo/HCI.git
+git clone https://github.com/LinkAlexander/VISHCI.git
 ```
 Get into the project folder (Windows)
 ```bash
