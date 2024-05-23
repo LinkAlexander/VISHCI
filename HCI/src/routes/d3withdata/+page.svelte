@@ -9,5 +9,16 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div>
 <h1>Hello World</h1>
-<h5>{data.result[0]}</h5>
+<p>Check out <i>src/routes/d3withdata</i></p>
+<p>For data access check out <i>src/db/db.js</i></p>
+<h3>Data</h3>
+<h5>{data.result[0]} | {data.result[1]} | {data.result[2]} | {data.result[3]} | {data.result[4]}</h5>
+</div>
+<h3>SQL Queries</h3>
+<div>
+  <p>select count(*) from ratings where "averageRating" &lt 0 and "averageRating" &gt 2"</p>
+  <p>select count(*) from ratings where "averageRating" &lt 2 and "averageRating" &gt 4"</p>
+  <p>select count(*) from ratings where "averageRating" &lt 4 and "averageRating" &gt 6"</p>
+  <p>select count(*) from ratings where "averageRating" &lt 6 and "averageRating" &gt 8"</p>
+  <p>select count(*) from ratings where "averageRating" &lt 8 and "averageRating" &gt 10"</p>
 </div>
