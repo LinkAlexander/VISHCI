@@ -1,10 +1,27 @@
 <script>
   //import * as d3 from "d3";
+
+
   export let data;
   console.log(data);
   console.log("-----------");
   console.assert(data.result[0]);
+  import * as d3 from "d3";
+  export let width = 640;
+  export let height = 400;
+  export let marginTop = 20;
+  export let marginRight = 20;
+  export let marginBottom = 20;
+  export let marginLeft = 20;
+
+  $: x = 0
+  $: y = d3.scaleLinear(d3.extent(data), [height - marginBottom, marginTop]);
+  $: line = d3.line((d, i) => x(i), y);
+
 </script>
+
+
+
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div>
