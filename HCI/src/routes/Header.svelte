@@ -6,9 +6,6 @@
 
 <header>
 	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
 	</div>
 
 	<nav>
@@ -16,9 +13,11 @@
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
 		<ul>
+		
 			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
 				<a href="/">Home</a>
 			</li>
+				<!--
 			<li aria-current={$page.url.pathname === '/about' ? 'page' : undefined}>
 				<a href="/about">About</a>
 			</li>
@@ -28,6 +27,29 @@
 			<li aria-current={$page.url.pathname === '/d3demo' ? 'page' : undefined}>
 				<a href="/d3demo">D3 Demo</a>
 			</li>
+			<li aria-current={$page.url.pathname === '/d3withdata' ? 'page' : undefined}>
+				<a href="/d3withdata">D3 with Data</a>
+			</li>
+			-->
+			<li aria-current={$page.url.pathname === '/d3Globe' ? 'page' : undefined}>
+				<a href="/d3Globe">D3 Globe</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/events' ? 'page' : undefined}>
+				<a href="/events">Events</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/Balken' ? 'page' : undefined}>
+				<a href="/Balken">Balkendiagramm</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>
+				<a href="/Scatter">Scatterplot</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/test3' ? 'page' : undefined}>
+				<a href="/test3">Test 3</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/test4' ? 'page' : undefined}>
+				<a href="/test4">Test 4</a>
+			</li>
+
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
@@ -35,9 +57,6 @@
 	</nav>
 
 	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
 	</div>
 </header>
 
