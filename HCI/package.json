@@ -31,6 +31,7 @@
 		"d3-selection": "^3.0.0",
 		"drizzle-orm": "^0.30.10",
 		"postgres": "^3.4.4",
+		"three": "^0.164.1",
 		"topojson-client": "^3.1.0"
 	}
 }

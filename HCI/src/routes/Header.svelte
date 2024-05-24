@@ -37,11 +37,11 @@
 			<li aria-current={$page.url.pathname === '/events' ? 'page' : undefined}>
 				<a href="/events">Events</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/test1' ? 'page' : undefined}>
-				<a href="/test1">Test 1</a>
+			<li aria-current={$page.url.pathname === '/Balken' ? 'page' : undefined}>
+				<a href="/Balken">Balkendiagramm</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/test2' ? 'page' : undefined}>
-				<a href="/test2">Test 2</a>
+			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>
+				<a href="/Scatter">Scatterplot</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/test3' ? 'page' : undefined}>
 				<a href="/test3">Test 3</a>
