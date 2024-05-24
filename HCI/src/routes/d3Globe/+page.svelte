@@ -1,73 +1,52 @@
 <script>
+    import { onMount } from "svelte";
     import * as d3 from "d3";
+    import worldData from "./world-110m.json";
+    import * as topojson from "topojson-client"; // Du brauchst die GeoJSON-Daten der Weltkarte
 
-    import { geoOrthographic, geoPath } from 'd3-geo';
-    import { drag } from 'd3-drag';
-    import { json } from 'd3-fetch';
-    import { select } from 'd3-selection';
-    import { onMount } from 'svelte';
-    import { feature, mesh } from 'topojson-client';
-
-    // Map setup & rendering
-    let projection = geoOrthographic();
-    let path = geoPath().projection(projection);
-    let rotation = [0, 0, 0]; // Initial rotation
-    let sphere = { type: 'Sphere' }; // Globe Outline
-    let land, borders;
-
-    // Reactive code to update on map dragging
-    $: if (projection) {
-        projection.rotate(rotation);
-        path = geoPath().projection(projection);
-    }
-
-    /**
-     * Calculates the rotation of the globe when the user drags on the map
-     *
-     * @param event
-     */
-    function dragged(event) {
-        const dx = event.dx;
-        const dy = event.dy;
-        const currentRotation = projection.rotate();
-        const radius = projection.scale();
-        const scale = 360 / (2 * Math.PI * radius);
-
-        rotation = [
-            currentRotation[0] + dx * scale,
-            currentRotation[1] - dy * scale,
-            currentRotation[2]
-        ];
-
-        projection.rotate(rotation);
-    }
+    let svg;
+    let countries;
 
     onMount(async () => {
-        // Geo Data from World-Atlas
-        const world = await json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
-        land = feature(world, world.objects.land);
-        borders = mesh(world, world.objects.countries, (a, b) => a !== b);
+        const width = 960;
+        const height = 600;
 
-        const globe = select('.globe-path');
+        const projection = d3.geoMercator()
+            .scale(150)
+            .translate([width / 2, height / 2]);
 
-        // Define drag behavior
-        const dragHandler = drag().on('drag', (event) => {
-            dragged({ dx: event.dx, dy: event.dy });
-        });
+        const path = d3.geoPath().projection(projection);
 
-        // Apply the drag behavior
-        dragHandler(globe);
+        const svgElement = d3.select(svg)
+            .attr("width", width)
+            .attr("height", height);
+
+        countries = topojson.feature(worldData, worldData.objects.countries).features;
+
+        svgElement.selectAll("path")
+            .data(countries)
+            .enter().append("path")
+            .attr("d", path)
+            .attr("class", "country")
+            .style("fill", d => getCountryColor(d.id)); // getCountryColor ist eine Funktion zur Bestimmung der Farbe
+
+        // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
+        function getCountryColor(countryId) {
+            // Hier kannst du deine Logik zur Farbgebung einfügen
+            const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+            if(countryId == 840) return "red"; // USA
+            if(countryId == 276) return "blue"; // Deutschland
+
+            return "pink";
+        }
     });
 </script>
 
-<svg width="100%" height="100%" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet">
+<style>
+    .country {
+        stroke: #fff;
+        stroke-width: 0.5px;
+    }
+</style>
 
-    <!-- Globe outline with transparent fill to make it completly draggable -->
-    <path d={path(sphere)} fill="rgba(0,0,0,0)" stroke="#000" class="globe-path" />
-
-    <!-- Land Outline -->
-    <path d={path(land)} fill="none" stroke="#000" />
-
-    <!--Countries' Borders -->
-    <path d={path(borders)} fill="none" stroke="#000" />
-</svg>
+<svg bind:this={svg}></svg>

@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="@types/d3" level="application" />
+    <orderEntry type="library" name="@types/topojson-client" level="application" />
   </component>
 </module>
