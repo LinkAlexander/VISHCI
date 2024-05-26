@@ -1,4 +1,5 @@
 <script>
+    //TODO check this one out https://www.newline.co/courses/better-data-visualizations-with-svelte/final-polish-globe
     // Import geojson objects
     import world from "./world-110m.json"; // From https://unpkg.com/world-atlas@1.1.4/world/110m.json
     import * as topojson from "topojson-client";
