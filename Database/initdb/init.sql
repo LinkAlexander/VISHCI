@@ -1,3 +1,4 @@
+/*
 CREATE TABLE ratings (
     tconst VARCHAR(100),
     averageRating FLOAT,
@@ -9,24 +10,46 @@ COPY ratings (tconst, averageRating, numVotes)
 FROM '/docker-entrypoint-initdb.d/data/title.ratings.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
+*/
 
-
+/*name.basics.tsv import*/
+CREATE TABLE temp_namebasics (
+    nconst VARCHAR(100),
+    primaryName VARCHAR(120),
+    birthYear TEXT,
+    deathYear TEXT,
+    primaryProfession VARCHAR(100),
+    knownForTitles VARCHAR(100)
+);
 CREATE TABLE namebasics (
     nconst VARCHAR(100),
     primaryName VARCHAR(120),
-    birthYear VARCHAR(100),
-    deathYear VARCHAR(100),
+    birthYear INT,
+    deathYear INT,
     primaryProfession VARCHAR(100),
     knownForTitles VARCHAR(100)
 );
 
 
-COPY namebasics (nconst, primaryName, birthYear, deathYear, primaryProfession, knownForTitles) 
+COPY temp_namebasics (nconst, primaryName, birthYear, deathYear, primaryProfession, knownForTitles) 
 FROM '/docker-entrypoint-initdb.d/data/name.basics.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
 
+INSERT INTO namebasics (nconst, primaryName, birthYear, deathYear, primaryProfession, knownForTitles)
+SELECT
+    nconst,
+    primaryName,
+    NULLIF(birthYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
+    NULLIF(deathYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
+    primaryProfession,
+    knownForTitles
+FROM temp_namebasics;
 
+-- Temporäre Tabelle löschen
+DROP TABLE temp_namebasics;
+
+/*
 CREATE TABLE akas (
     titleId VARCHAR(100),
     ordering VARCHAR(120),
@@ -105,3 +128,4 @@ COPY principals (tconst, ordering, nconst, category, job, characters)
 FROM '/docker-entrypoint-initdb.d/data/title.principals.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
+*/
