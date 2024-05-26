@@ -1,4 +1,4 @@
-/*name.basics.tsv import*/
+--name.basics.tsv import
 CREATE TABLE ratings (
     tconst VARCHAR(100),
     averageRating FLOAT,
@@ -12,7 +12,7 @@ DELIMITER E'\t'
 CSV HEADER;
 
 
-/*name.basics.tsv import*/
+--name.basics.tsv import
 CREATE TABLE temp_namebasics (
     nconst VARCHAR(100),
     primaryName VARCHAR(120),
@@ -46,10 +46,9 @@ SELECT
     knownForTitles
 FROM temp_namebasics;
 
--- Temporäre Tabelle löschen
 DROP TABLE temp_namebasics;
 
-/*CREATE TABLE akas*/
+--CREATE TABLE akas
 CREATE TABLE akas (
     titleId VARCHAR(100),
     ordering INT,
@@ -67,7 +66,7 @@ FROM '/docker-entrypoint-initdb.d/data/title.akas.tsv'
 DELIMITER E'\t' 
 CSV HEADER;
 
-/*CREATE TABLE titlebasics*/
+--CREATE TABLE titlebasics
 CREATE TABLE temp_titlebasics (
     tconst VARCHAR(100),
     titleType VARCHAR(100),
@@ -110,10 +109,9 @@ SELECT
     genres
 FROM temp_titlebasics;
 
--- Temporäre Tabelle löschen
 DROP TABLE temp_titlebasics;
 
-/*CREATE TABLE crew */
+--CREATE TABLE crew
 CREATE TABLE crew (
     tconst VARCHAR(100),
     directors VARCHAR(16000),
@@ -126,7 +124,7 @@ FROM '/docker-entrypoint-initdb.d/data/title.crew.tsv'
 DELIMITER E'\t' 
 CSV HEADER;
 
-/*CREATE TABLE episode*/
+--CREATE TABLE episode
 CREATE TABLE episode (
     tconst VARCHAR(100),
     parentTconst VARCHAR(100),
@@ -154,10 +152,9 @@ SELECT
     NULLIF(episodeNumber, E'\\N')::INT
 FROM temp_episode;
 
--- Temporäre Tabelle löschen
 DROP TABLE temp_episode;
 
-/*CREATE TABLE principals*/
+--CREATE TABLE principals
 CREATE TABLE principals (
     tconst VARCHAR(100),
     ordering INT,
