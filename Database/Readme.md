@@ -18,6 +18,8 @@ docker build -t db-container .
 docker run --name database-container -d -p 5432:5432 db-container
 ```
 # Abschluss
-Zum Verbinden mit der DB können in den Containerlogs Postgres-Version, IP-Adresse und Port ausgelesen werden. Diese Informationen werden nach der Initialisierung der DB angezeigt 
+Zum Verbinden mit der DB können in den Containerlogs Postgres-Version, IP-Adresse und Port ausgelesen werden. Diese Informationen werden nach der Initialisierung der DB angezeigt: 
 
 ![grafik](https://github.com/LinkAlexander/VISHCI/assets/167143907/97f55722-721a-404c-8b2a-e9610a67d6e7)
+
+User, Password, Databasename können dem Database-Dockerfile entnommen werden
