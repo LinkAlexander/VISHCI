@@ -23,3 +23,9 @@ Zum Verbinden mit der DB können in den Containerlogs Postgres-Version, IP-Adres
 ![grafik](https://github.com/LinkAlexander/VISHCI/assets/167143907/97f55722-721a-404c-8b2a-e9610a67d6e7)
 
 User, Password, Databasename können dem Database-Dockerfile entnommen werden
+
+
+# Docker Image bei DockerHub hochladen
+CMD 1 und 3
+
+![grafik](https://github.com/LinkAlexander/VISHCI/assets/167143907/6f8e7f96-cdd5-4974-b946-ac4a4d3b430d)
