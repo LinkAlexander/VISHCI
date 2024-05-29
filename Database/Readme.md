@@ -1,9 +1,9 @@
 # How To: Database Creation
 ```
-docker pull landstreicherjo/hci
+docker pull landstreicherjo/hci:latest
 ```
 ```
-docker run --name database-container -d -p 5432:5432 db-container
+docker run --name landstreicherjo/hci:latest -d -p 5432:5432 db-container
 ```
 # Dokumentation
 ## Projekt vorbereiten
