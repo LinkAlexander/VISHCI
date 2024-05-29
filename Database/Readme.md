@@ -8,7 +8,7 @@ Daten müssen dann wie die title.ratings.tsv abgelegt werden:
 
 
 # Datenbank erzeugen
-Befehle in diesem ordner (beim Dockerfile) ausführen:
+Befehle im Database-Ordner (beim Dockerfile) ausführen:
 
 docker build -t db-container .
 
