@@ -1,8 +1,5 @@
 # How To: Database Creation
 ```
-docker pull landstreicherjo/hci:latest
-```
-```
 docker run --name Db-Container -d -p 5432:5432 landstreicherjo/hci:latest
 ```
 # Dokumentation
