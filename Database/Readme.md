@@ -3,7 +3,7 @@
 docker pull landstreicherjo/hci:latest
 ```
 ```
-docker run --name landstreicherjo/hci:latest -d -p 5432:5432 db-container
+docker run --name Db-Container -d -p 5432:5432 landstreicherjo/hci:latest
 ```
 # Dokumentation
 ## Projekt vorbereiten
