@@ -2,6 +2,9 @@
 ```
 docker run --name Db-Container -d -p 5432:5432 landstreicherjo/hci:latest
 ```
+```
+ docker logs -f Db-Container
+```
 # Dokumentation
 ## Projekt vorbereiten
 Daten hier runterladen: https://mega.nz/folder/91gjCTKZ#bBwNltiHFoHF3OazdAiz_Q
