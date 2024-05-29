@@ -1,4 +1,12 @@
-# Projekt vorbereiten
+# How To: Database Creation
+```
+docker pull landstreicherjo/hci
+```
+```
+docker run --name database-container -d -p 5432:5432 db-container
+```
+# Dokumentation
+## Projekt vorbereiten
 Daten hier runterladen: https://mega.nz/folder/91gjCTKZ#bBwNltiHFoHF3OazdAiz_Q
 
 Daten müssen dann wie die title.ratings.tsv abgelegt werden:
@@ -7,7 +15,7 @@ Daten müssen dann wie die title.ratings.tsv abgelegt werden:
 
 
 
-# Datenbank erzeugen
+## Datenbank erzeugen
 Befehle im Database-Ordner (beim Dockerfile) ausführen:
 
 ``` 
@@ -17,7 +25,7 @@ docker build -t db-container .
 ```
 docker run --name database-container -d -p 5432:5432 db-container
 ```
-# Abschluss
+## Abschluss
 Zum Verbinden mit der DB können in den Containerlogs Postgres-Version, IP-Adresse und Port ausgelesen werden. Diese Informationen werden nach der Initialisierung der DB angezeigt: 
 
 ![grafik](https://github.com/LinkAlexander/VISHCI/assets/167143907/97f55722-721a-404c-8b2a-e9610a67d6e7)
@@ -25,7 +33,7 @@ Zum Verbinden mit der DB können in den Containerlogs Postgres-Version, IP-Adres
 User, Password, Databasename können dem Database-Dockerfile entnommen werden
 
 
-# Docker Image bei DockerHub hochladen
+## Docker Image bei DockerHub hochladen
 CMD 1 und 3
 
 ![grafik](https://github.com/LinkAlexander/VISHCI/assets/167143907/6f8e7f96-cdd5-4974-b946-ac4a4d3b430d)
