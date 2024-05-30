@@ -30,3 +30,9 @@ SELECT * FROM ratings;
 SELECT * FROM akas;
 SELECT * FROM titlebasics;
 SELECT * FROM namebasics;
+
+-- Count the genres by year range
+SELECT count(*), genres
+from titlebasics
+WHERE startyear > 1910 AND startyear < 1920
+group by genres;
