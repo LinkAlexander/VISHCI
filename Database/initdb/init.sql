@@ -11,7 +11,6 @@ FROM '/docker-entrypoint-initdb.d/data/title.ratings.tsv'
 DELIMITER E'\t' 
 CSV HEADER;
 
-
 --name.basics.tsv import
 CREATE TABLE temp_namebasics (
     nconst VARCHAR(100),
@@ -26,7 +25,7 @@ CREATE TABLE namebasics (
     primaryName VARCHAR(120),
     birthYear INT,
     deathYear INT,
-    primaryProfession VARCHAR(100),
+    primaryProfession TEXT[],
     knownForTitles VARCHAR(100)
 );
 
@@ -42,11 +41,12 @@ SELECT
     primaryName,
     NULLIF(birthYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
     NULLIF(deathYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
-    primaryProfession,
-    knownForTitles
+    string_to_array(primaryProfession, ','),
+    string_to_array(knownForTitles, ',')
 FROM temp_namebasics;
 
 DROP TABLE temp_namebasics;
+
 
 --CREATE TABLE akas
 CREATE TABLE akas (
@@ -87,7 +87,7 @@ CREATE TABLE titlebasics (
     startYear INT,
     endYear INT,
     runtimeMinutes INT,
-    genres VARCHAR(100)
+    genres TEXT[]
 );
 
 
@@ -106,23 +106,38 @@ SELECT
     NULLIF(startYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
     NULLIF(endYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
     NULLIF(runtimeMinutes, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
-    genres
+    string_to_array(genres, ',')
 FROM temp_titlebasics;
 
 DROP TABLE temp_titlebasics;
 
 --CREATE TABLE crew
-CREATE TABLE crew (
+CREATE TABLE temp_crew (
     tconst VARCHAR(100),
     directors VARCHAR(16000),
     writers VARCHAR(16000)
 );
 
+CREATE TABLE crew (
+    tconst VARCHAR(100),
+    directors TEXT[],
+    writers TEXT[]
+);
 
-COPY crew (tconst, directors, writers) 
+COPY temp_crew (tconst, directors, writers) 
 FROM '/docker-entrypoint-initdb.d/data/title.crew.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
+
+
+INSERT INTO crew (tconst, directors, writers)
+SELECT
+    tconst,
+    string_to_array(directors, ','),
+    string_to_array(writers, ',')
+FROM temp_crew;
+
+DROP TABLE temp_crew;
 
 --CREATE TABLE episode
 CREATE TABLE episode (
