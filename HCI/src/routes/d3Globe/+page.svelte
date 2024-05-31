@@ -21,13 +21,14 @@
             .scale(150)
             .translate([width / 2, height / 2]);
 
+
+
         const path = d3.geoPath().projection(projection);
 
         const svgElement = d3.select(svg)
             .attr("width", width)
             .attr("height", height);
 
-        // @ts-ignore
         countries = topojson.feature(worldData, worldData.objects.countries).features;
 
         svgElement.selectAll("path")
@@ -44,6 +45,31 @@
                 // Reset the fill color on mouseout
                 d3.select(this).style("fill", getCountryColor(d.id));
             });
+        // Define your color scale
+        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Create a group element for the legend
+        const legend = svgElement.append("g")
+            .attr("transform", "translate("+width+", " + height); // Adjust these values to position your legend
+
+        // Create rectangles for each color in your scale
+        colorScale.domain().forEach((value, i) => {
+            const legendRow = legend.append("g")
+                .attr("transform", `translate(0, ${i * 20})`); // Adjust these values to position your color swatches
+
+            legendRow.append("rect")
+                .attr("width", 10)
+                .attr("height", 10)
+                .attr("fill", colorScale(value));
+
+            legendRow.append("text")
+                .attr("x", -10)
+                .attr("y", 10)
+                .attr("text-anchor", "end")
+                .style("text-transform", "capitalize")
+                .text(value);
+        });
+
         // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
         /**
          * @param {number} countryId
@@ -65,6 +91,7 @@
         function findCountryIDbyName(name) {
             return 124;
         }
+        legend.raise();
     });
 </script>
 

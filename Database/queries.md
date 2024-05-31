@@ -51,3 +51,26 @@ AND r.numvotes > 100
 SELECT startyear, genres, count(genres) from titlebasics t
 WHERE startyear > 1900 AND startyear < 2000
 group by startyear, genres;
+
+CREATE INDEX idx_akas_titleId ON akas(titleId);
+CREATE INDEX idx_akas_region ON akas(region);
+-- Count the exported Titles per region
+WITH translations AS (
+SELECT
+original.titleId AS originalTitleId,
+original.region AS originalRegion,
+translation.region AS translationRegion
+FROM
+akas AS original
+JOIN
+akas AS translation ON original.titleId = translation.titleId
+WHERE
+original.region <> translation.region
+)
+SELECT
+originalRegion AS region,
+COUNT(DISTINCT originalTitleId) AS numTranslations
+FROM
+translations
+GROUP BY
+originalRegion;
