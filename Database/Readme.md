@@ -36,6 +36,9 @@ docker run --name database-container -d -p 5432:5432 db-container
 ```
 
 ## Docker Image bei DockerHub hochladen
-CMD 1 und 3
-
-![grafik](https://github.com/LinkAlexander/VISHCI/assets/167143907/6f8e7f96-cdd5-4974-b946-ac4a4d3b430d)
+```
+docker image tag db-container landstreicherjo/hci:latest
+```
+```
+docker image push --all-tags landstreicherjo/hci
+```
