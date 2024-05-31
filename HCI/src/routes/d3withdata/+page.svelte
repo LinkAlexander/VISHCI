@@ -14,10 +14,6 @@
   export let marginBottom = 20;
   export let marginLeft = 20;
 
-  $: x = 0
-  $: y = d3.scaleLinear(d3.extent(data), [height - marginBottom, marginTop]);
-  $: line = d3.line((d, i) => x(i), y);
-
 </script>
 
 

@@ -1,9 +1,9 @@
 import postgres from 'postgres'
 
-const PGHOST = "127.0.0.1";
-const PGDATABASE = "IMDb";
-const PGUSER = "postgres";
-const PGPASSWORD = "my_password";
+const PGHOST = "localhost";
+const PGDATABASE = "mydatabase";
+const PGUSER = "myuser";
+const PGPASSWORD = "mypassword";
 
 export const sql = postgres({ host: PGHOST, database: PGDATABASE, username: PGUSER, password: PGPASSWORD, port: 5432 });
 

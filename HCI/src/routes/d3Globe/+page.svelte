@@ -35,8 +35,15 @@
             .enter().append("path")
             .attr("d", path)
             .attr("class", "country")
-            .style("fill", d => getCountryColor(d.id)); // getCountryColor ist eine Funktion zur Bestimmung der Farbe
-
+            .style("fill", d => getCountryColor(d.id)) // getCountryColor ist eine Funktion zur Bestimmung der Farbe
+            .on("mouseover", function(event, d) {
+                // Highlight the country on mouseover
+                d3.select(this).style("fill", "yellow");
+            })
+            .on("mouseout", function(event, d) {
+                // Reset the fill color on mouseout
+                d3.select(this).style("fill", getCountryColor(d.id));
+            });
         // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
         /**
          * @param {number} countryId
