@@ -27,10 +27,12 @@
 			<li aria-current={$page.url.pathname === '/d3demo' ? 'page' : undefined}>
 				<a href="/d3demo">D3 Demo</a>
 			</li>
+			-->
+
 			<li aria-current={$page.url.pathname === '/d3withdata' ? 'page' : undefined}>
 				<a href="/d3withdata">D3 with Data</a>
 			</li>
-			-->
+
 			<li aria-current={$page.url.pathname === '/d3Globe' ? 'page' : undefined}>
 				<a href="/d3Globe">D3 Globe</a>
 			</li>
