@@ -26,8 +26,6 @@ select count(*) from namebasics where primaryprofession LIKE '%actress%' AND dea
 -- Select the average rating of movies per country, as well as the number of votes
 ```SQL
 SELECT avg(rating.averagerating) AS avg,
-```
-```SQL
 sum(rating.numvotes) AS numberOfVotes,
 aka.region FROM AKAS AS aka
 JOIN ratings AS rating
@@ -35,6 +33,7 @@ ON aka.titleid = rating.tconst
 GROUP BY aka.region
 ORDER BY avg;
 ```
+-- Call tables
 ```SQL
 SELECT * FROM episode;
 ```
