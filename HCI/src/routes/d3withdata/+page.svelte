@@ -4,15 +4,12 @@
 
   export let data;
   console.log(data);
-  console.log("-----------");
-  console.assert(data.result[0]);
-  import * as d3 from "d3";
-  export let width = 640;
-  export let height = 400;
-  export let marginTop = 20;
-  export let marginRight = 20;
-  export let marginBottom = 20;
-  export let marginLeft = 20;
+  export const width = 640;
+  export const height = 400;
+  export const marginTop = 20;
+  export const marginRight = 20;
+  export const marginBottom = 20;
+  export const marginLeft = 20;
 
 </script>
 

@@ -125,7 +125,6 @@
 </script>
 
 <style>
-    body { margin: 0; }
     #chart { width: 100vw; height: 100vh; position: relative; }
     #tooltip { position: absolute; display: none; background: rgba(0, 0, 0, 0.5); color: #fff; padding: 5px; border-radius: 5px; pointer-events: none; }
 </style>
