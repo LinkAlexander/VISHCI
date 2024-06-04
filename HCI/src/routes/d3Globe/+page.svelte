@@ -12,8 +12,9 @@
      * @type {SVGSVGElement}
      */
     let svg;
+    let tooltip;
+
     let countries;
-    // let countryLookup;
 
     onMount(async () => {
         const width = 960;
@@ -47,18 +48,40 @@
             .on("mouseover", function (event, d) {
                 // Highlight the country on mouseover
                 d3.select(this).style("fill", "darkgrey");
+
+                // Show tooltip parseFloat(number.toFixed(3))
+                //const avgValue = parseFloat(findAvgByRegion(findRegionById(d.id)).toFixed(3));
+                let avgValue = findAvgByRegion(findRegionById(d.id));
+                if (avgValue != null) {
+                    avgValue = parseFloat(avgValue.toFixed(3));
+                    d3.select(tooltip)
+                        .style("display", "block")
+                        .html(
+                            `Avg Value: ${avgValue !== null ? avgValue : "null"}`,
+                        );
+                }
+            })
+            .on("mousemove", function (event) {
+                // Move the tooltip with the mouse
+                d3.select(tooltip)
+                    .style("left", event.pageX + 10 + "px")
+                    .style("top", event.pageY - 15 + "px");
             })
             .on("mouseout", function (event, d) {
                 // Reset the fill color on mouseout
                 d3.select(this).style("fill", getCountryColor(d.id));
+
+                // Hide tooltip
+                d3.select(tooltip).style("display", "none");
             });
+
         // Define your color scale
         const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
         // Create a group element for the legend
         const legend = svgElement
             .append("g")
-            .attr("transform", "translate(" + width + ", " + height); // Adjust these values to position your legend
+            .attr("transform", "translate(" + width + ", " + height + ")"); // Adjust these values to position your legend
 
         // Create rectangles for each color in your scale
         colorScale.domain().forEach((value, i) => {
@@ -89,7 +112,6 @@
             // Hier kannst du deine Logik zur Farbgebung einfügen
             const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
             const average = findAvgByRegion(findRegionById(countryId));
-            console.log(average);
             if (average != null) return valueToColor(average); // USA
 
             return "rgb(120,120,120,190)";
@@ -147,6 +169,21 @@
 </script>
 
 <svg bind:this={svg}></svg>
+<div bind:this={tooltip} class="tooltip" style="display: none;"></div>
 
 <style>
+    .tooltip {
+        position: absolute;
+        padding: 5px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        pointer-events: none;
+        font-size: 12px;
+        color: #333;
+    }
+    .country {
+        stroke: #fff;
+        stroke-width: 0.5px;
+    }
 </style>
