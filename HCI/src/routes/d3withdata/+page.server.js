@@ -1,13 +1,6 @@
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import * as schema from '../../db/schema';
 import { sql } from '../../db/db'
 
 export const load = async () => {
-  // for query purposes
-  //const queryClient = postgres("postgres://postgres:my_password@127.0.0.1:5432/IMDb");
-  //const db = drizzle(queryClient, { schema });
-  //const result = await db.query.ratingsTable.findFirst();
   const result = new Array();
 
   let quicksave;

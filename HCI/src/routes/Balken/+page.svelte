@@ -76,21 +76,5 @@
 <div id="chart"></div>
 
 <style>
-    .tooltip {
-        position: absolute;
-        text-align: center;
-        width: 60px;
-        height: 28px;
-        padding: 2px;
-        font: 12px sans-serif;
-        background: lightsteelblue;
-        border: 0px;
-        border-radius: 8px;
-        pointer-events: none;
-        opacity: 0;
-    }
 
-    .bar:hover {
-        fill: orange;
-    }
 </style>
