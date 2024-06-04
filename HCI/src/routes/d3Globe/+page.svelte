@@ -114,7 +114,7 @@
             const average = findAvgByRegion(findRegionById(countryId));
             if (average != null) return valueToColor(average); // USA
 
-            return "rgb(120,120,120,190)";
+            return "rgb(200, 200, 200)";
         }
         // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
         /**
@@ -146,11 +146,15 @@
         }
 
         function valueToColor(value) {
-            // Define the min and max values
-            const minValue = 3.4;
-            const maxValue = 8;
+            // Holen der Mindest- und Höchstwerte aus den HTML-Attributen
+            const minValue = parseFloat(
+                document.getElementById("minValue").value,
+            );
+            const maxValue = parseFloat(
+                document.getElementById("maxValue").value,
+            );
 
-            // Ensure the value is within the range [3.4, 8]
+            // Ensure the value is within the range [minValue, maxValue]
             value = Math.min(Math.max(value, minValue), maxValue);
 
             // Normalize the value to the range [0, 1]
@@ -164,9 +168,55 @@
             // Return the color in RGB format
             return `rgb(${red}, ${green}, ${blue})`;
         }
+
+        // Funktion zum Neuzeichnen der Karte basierend auf den neuen Mindest- und Höchstwerten
+        function redrawMap() {
+            // Holen der neuen Mindest- und Höchstwerte aus den Eingabefeldern
+            const minValue = parseFloat(
+                document.getElementById("minValue").value,
+            );
+            const maxValue = parseFloat(
+                document.getElementById("maxValue").value,
+            );
+
+            // Neuzeichnen der Karte mit den neuen Werten
+            svgElement
+                .selectAll(".country")
+                .style("fill", (d) =>
+                    getCountryColor(d.id, minValue, maxValue),
+                );
+        }
+
+        // Eventlistener für Änderungen an den Eingabefeldern
+        document
+            .getElementById("minValue")
+            .addEventListener("change", redrawMap);
+        document
+            .getElementById("maxValue")
+            .addEventListener("change", redrawMap);
+
+        // Show slider values
+        document
+            .getElementById("minValue")
+            .addEventListener("input", function () {
+                document.getElementById("minValueLable").innerHTML = "minValue = " + this.value;
+            });
+
+        document
+            .getElementById("maxValue")
+            .addEventListener("input", function () {
+                document.getElementById("maxValueLable").innerHTML = "maxValue = " + this.value;
+            });
+
+        //--------------------------------------
         legend.raise();
     });
 </script>
+
+<p id="minValueLable">minValue = 3.4</p>
+<input type="range" id="minValue" value="3.4" step="0.1" min="3" max="8" />
+<p id="maxValueLable">maxValue = 8</p>
+<input type="range" id="maxValue" value="8" step="0.1" min="3" max="8" />
 
 <svg bind:this={svg}></svg>
 <div bind:this={tooltip} class="tooltip" style="display: none;"></div>
@@ -181,9 +231,5 @@
         pointer-events: none;
         font-size: 12px;
         color: #333;
-    }
-    .country {
-        stroke: #fff;
-        stroke-width: 0.5px;
     }
 </style>
