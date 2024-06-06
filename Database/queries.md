@@ -640,6 +640,7 @@ NU,1
 PW,1
 
 -- Gruppiere Actors nach Alter
+```SQL
 SELECT WIDTH_BUCKET(EXTRACT(YEAR FROM age(current_date, make_date(birthyear, 1, 1))), 0, 100, 10) * 10 AS age_group,
        COUNT(*) AS count
 FROM namebasics
@@ -647,3 +648,4 @@ WHERE deathyear IS NULL
   AND 'actor' = ANY(primaryprofession)
 GROUP BY age_group
 ORDER BY age_group;
+```
