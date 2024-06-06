@@ -12,12 +12,15 @@
     let svg;
     let tooltip;
     let countries;
+    let startYear;
+    let endYear;
 
     onMount(async () => {
         const width = 960;
         const height = 600;
-        const minYear = parseInt(document.getElementById("minYear").value);
-        const maxYear = parseInt(document.getElementById("maxYear").value);
+        startYear = parseInt(document.getElementById("minYear").value);
+        endYear = parseInt(document.getElementById("maxYear").value);
+
 
         const projection = d3
             .geoMercator()
@@ -70,7 +73,7 @@
 
                 // Reset the fill color on mouseout
 
-                d3.select(this).style("fill", getCountryColor(d.id, minYear, maxYear));
+                d3.select(this).style("fill", getCountryColor(d.id, startYear, endYear));
 
                 // Hide tooltip
                 d3.select(tooltip).style("display", "none");
@@ -90,16 +93,16 @@
 
         function findAvgByRegion(region, startYear, endYear) {
             let returnVal = data.averagesByRegion.filter(function (d) {
-            return d.region == region && d.startyear >= startYear && d.startyear <= endYear;
-        });
+                return d.region == region && d.startyear >= startYear && d.startyear <= endYear;
+            });
             if (returnVal.length) {
                 const avg = returnVal.reduce((acc, curr) => acc + curr.avg, 0) / returnVal.length;
-            return avg;
+                return avg;
             } else {
+                console.log(`No matching records for region: ${region} between years ${startYear} and ${endYear}`);
                 return null;
             }
         }
-
         function getCountryColor(countryId, startYear, endYear) {
             const average = findAvgByRegion(findRegionById(countryId), startYear, endYear);
             if (average === null) {
@@ -110,7 +113,7 @@
 
         function redrawMap() {
 
-            svgElement.selectAll(".country").style("fill", (d) => getCountryColor(d.id, minYear, maxYear));
+            svgElement.selectAll(".country").style("fill", (d) => getCountryColor(d.id, startYear, endYear));
         }
 
 

@@ -11,8 +11,7 @@ export const load = async () => {
         ON aka.titleid = rating.tconst
         JOIN titlebasics as title
         ON title.tconst = rating.tconst
-        GROUP BY aka.region, title.startyear 
-        ORDER BY avg;
+        GROUP BY aka.region, title.startyear;
         `
 
         return {
