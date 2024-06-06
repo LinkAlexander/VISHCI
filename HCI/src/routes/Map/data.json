@@ -342,6 +342,11 @@
     "population": 104258327
   },
   {
+    "country": "Eritrea",
+    "code": "EE",
+    "id": "232"
+  },
+  {
     "country": "Spain",
     "code": "ES",
     "id": "724",
@@ -621,6 +626,12 @@
     "country": "Korea, Republic of",
     "code": "KR",
     "id": "410",
+    "population": 51744876
+  },
+  {
+    "country": "Kosovo",
+    "code": "XK",
+    "id": "999",
     "population": 51744876
   },
   {
@@ -954,10 +965,20 @@
     "population": 7219641
   },
   {
+    "country": "Falkland Islands",
+    "code": "TF",
+    "id": "238"
+  },
+  {
     "country": "French Polynesia",
     "code": "PF",
     "id": "258",
     "population": 282534
+  },
+  {
+    "country": "French Southern and Antarctic Lands",
+    "code": "TF",
+    "id": "260"
   },
   {
     "country": "Qatar",
@@ -1068,6 +1089,12 @@
     "population": 2107007
   },
   {
+    "country": "Slowakia",
+    "code": "SK",
+    "id": "703",
+    "population": 2107007
+  },
+  {
     "country": "Sweden",
     "code": "SE",
     "id": "752",
@@ -1096,6 +1123,11 @@
     "code": "SY",
     "id": "760",
     "population": 18275704
+  },
+  {
+    "country": "Taiwan",
+    "code": "TW",
+    "id": "158"
   },
   {
     "country": "Turks and Caicos Islands",
@@ -1258,6 +1290,12 @@
     "code": "ZA",
     "id": "710",
     "population": 60041996
+  },
+  {
+    "country": "West Bank",
+    "code": "PS",
+    "id": "275"
+
   },
   {
     "country": "Zambia",

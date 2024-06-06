@@ -51,10 +51,10 @@
                 // Highlight the country on mouseover
                 d3.select(this).style("fill", "darkgrey");
 
+                console.log(d.id);
                 // Show tooltip parseFloat(number.toFixed(3))
                 //const avgValue = parseFloat(findAvgByRegion(findRegionById(d.id)).toFixed(3));
                 let avgValue = findAvgByRegion(findRegionById(d.id), startYear, endYear);
-
                 if (avgValue != null) {
                     avgValue = parseFloat(avgValue.toFixed(3));
                     d3.select(tooltip)
@@ -106,12 +106,29 @@
         }
         function getCountryColor(countryId) {
             const average = findAvgByRegion(findRegionById(countryId), startYear, endYear);
+
+            // south sudan 728
+            // French Southern and Antarctic Lands 260
+            // Falkland Islands 238
+            // Antarctica 10
+            // Afghanistan 4 - has no movies in imdb
+            // Kosovo 999 -- Self assigned code, no official code exists
+            if (countryId == 728 ||
+                countryId == 260 ||
+                countryId == 238 ||
+                countryId == 10 ||
+                countryId == 4 ||
+                countryId == 999
+            ) {
+
+                return "red"
+            }
+
             if (average === null) {
-                console.log(countryId + " has no data");
-                console.log(findRegionById(countryId));
                 return "black";
             }
-            return valueToColor(average);
+            return "yellow"
+            // return valueToColor(average);
         }
 
         function redrawMap() {
@@ -178,6 +195,7 @@
                 redrawMap();
             });
     });
+
 </script>
 
 <p id="minYearLable">minYear = 1895</p>
