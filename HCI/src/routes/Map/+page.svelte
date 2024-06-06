@@ -11,12 +11,13 @@
      */
     let svg;
     let tooltip;
-
     let countries;
 
     onMount(async () => {
         const width = 960;
         const height = 600;
+        const minYear = parseInt(document.getElementById("minYear").value);
+        const maxYear = parseInt(document.getElementById("maxYear").value);
 
         const projection = d3
             .geoMercator()
@@ -66,24 +67,14 @@
                     .style("top", event.pageY - 15 + "px");
             })
             .on("mouseout", function (event, d) {
+
                 // Reset the fill color on mouseout
-                d3.select(this).style("fill", getCountryColor(d.id));
+
+                d3.select(this).style("fill", getCountryColor(d.id, minYear, maxYear));
 
                 // Hide tooltip
                 d3.select(tooltip).style("display", "none");
             });
-
-        // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
-        /**
-         * @param {number} countryId
-         */
-        function getCountryColor(countryId) {
-            // Hier kannst du deine Logik zur Farbgebung einfügen
-            const average = findAvgByRegion(findRegionById(countryId));
-            if (average != null) return valueToColor(average); // USA
-
-            return "rgb(200, 200, 200)";
-        }
 
         function findRegionById(ID) {
             let returnVal = refData.filter(function (data) {
@@ -93,21 +84,35 @@
             if (returnVal.length) {
                 return returnVal[0].code;
             } else {
-                return "default";
+                return null;
             }
         }
 
-        function findAvgByRegion(region) {
+        function findAvgByRegion(region, startYear, endYear) {
             let returnVal = data.averagesByRegion.filter(function (d) {
-                return d.region == region;
-            });
-
+            return d.region == region && d.startyear >= startYear && d.startyear <= endYear;
+        });
             if (returnVal.length) {
-                return returnVal[0].avg;
+                const avg = returnVal.reduce((acc, curr) => acc + curr.avg, 0) / returnVal.length;
+            return avg;
             } else {
                 return null;
             }
         }
+
+        function getCountryColor(countryId, startYear, endYear) {
+            const average = findAvgByRegion(findRegionById(countryId), startYear, endYear);
+            if (average === null) {
+                return "black";
+            }
+            return valueToColor(average);
+        }
+
+        function redrawMap() {
+
+            svgElement.selectAll(".country").style("fill", (d) => getCountryColor(d.id, minYear, maxYear));
+        }
+
 
         function valueToColor(value) {
             // Holen der Mindest- und Höchstwerte aus den HTML-Attributen
@@ -133,14 +138,6 @@
             return `rgb(${red}, ${green}, ${blue})`;
         }
 
-        // Funktion zum Neuzeichnen der Karte basierend auf den neuen Mindest- und Höchstwerten
-        function redrawMap() {
-            const minYear = parseInt(document.getElementById("minYear").value);
-            const maxYear = parseInt(document.getElementById("maxYear").value);
-
-            svgElement.selectAll(".country").style("fill", (d) => getCountryColor(d.id, minYear, maxYear));
-        }
-
 
         // Eventlistener für Änderungen an den Eingabefeldern
         document
@@ -162,7 +159,6 @@
             .addEventListener("input", function () {
                 document.getElementById("maxYearLable").innerHTML = "maxYear = " + this.value;
             });
-
     });
 </script>
 
