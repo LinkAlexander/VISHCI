@@ -19,6 +19,9 @@
       {"age": "0-9", "male": data.population[0][0].count, "female": data.population[1][0].count}
   ];
 
+  let tooltip;
+
+
   onMount(() => {
       const margin = {top: 20, right: 30, bottom: 40, left: 60},
           width = 1000 - margin.left - margin.right,
@@ -60,7 +63,28 @@
           .attr("y", d => y(d.age))
           .attr("width", d => x(0) - x(-d.male))
           .attr("height", y.bandwidth())
-          .attr("fill", "steelblue");
+          .attr("fill", "steelblue")
+          .on("mouseover", function (event, d) {
+                // Highlight the country on mouseover
+                d3.select(this).style("fill", "darkgrey");
+
+                d3.select(tooltip)
+                    .style("display", "block")
+                    .html("Person at this age: " + d.male);                
+            })
+            .on("mousemove", function (event) {
+                // Move the tooltip with the mouse
+                d3.select(tooltip)
+                    .style("left", event.pageX + 10 + "px")
+                    .style("top", event.pageY - 15 + "px");
+            })
+            .on("mouseout", function (event, d) {
+                // Reset the fill color on mouseout
+                d3.select(this).style("fill", "steelblue");
+
+                // Hide tooltip
+                d3.select(tooltip).style("display", "none");
+            });
 
       svg.selectAll(".bar.female")
           .data(data2)
@@ -71,8 +95,43 @@
           .attr("y", d => y(d.age))
           .attr("width", d => x(d.female) - x(0))
           .attr("height", y.bandwidth())
-          .attr("fill", "pink");
+          .attr("fill", "pink")
+          .on("mouseover", function (event, d) {
+                // Highlight the country on mouseover
+                d3.select(this).style("fill", "darkgrey");
+
+                d3.select(tooltip)
+                    .style("display", "block")
+                    .html("Person at this age: " + d.female);                
+            })
+            .on("mousemove", function (event) {
+                // Move the tooltip with the mouse
+                d3.select(tooltip)
+                    .style("left", event.pageX + 10 + "px")
+                    .style("top", event.pageY - 15 + "px");
+            })
+            .on("mouseout", function (event, d) {
+                // Reset the fill color on mouseout
+                d3.select(this).style("fill", "pink");
+
+                // Hide tooltip
+                d3.select(tooltip).style("display", "none");
+            });
   });
 </script>
 
 <div id="pyramid"></div>
+<div bind:this={tooltip} class="tooltip" style="display: none;"></div>
+
+<style>
+    .tooltip {
+        position: absolute;
+        padding: 5px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        pointer-events: none;
+        font-size: 12px;
+        color: #333;
+    }
+</style>
