@@ -12,14 +12,14 @@
     let svg;
     let tooltip;
     let countries;
-    let startYear;
-    let endYear;
+    let startYear = 1895
+    let endYear = 2024;
 
     onMount(async () => {
         const width = 960;
         const height = 600;
-        startYear = parseInt(document.getElementById("minYear").value);
-        endYear = parseInt(document.getElementById("maxYear").value);
+        document.getElementById("minYear").value = startYear;
+        document.getElementById("maxYear").value = endYear;
 
 
         const projection = d3
@@ -93,7 +93,6 @@
         }
 
         function findAvgByRegion(region, startYear, endYear) {
-            console.log("Region: " + region);
             let returnVal = data.averagesByRegion.filter(function (d) {
                 return d.region === region && d.startyear >= startYear && d.startyear <= endYear;
             });
@@ -102,13 +101,14 @@
                 const avg = returnVal.reduce((acc, curr) => acc + curr.avg, 0) / returnVal.length;
                 return avg;
             } else {
-                console.log(`No matching records for region: ${region} between years ${startYear} and ${endYear}`);
                 return null;
             }
         }
-        function getCountryColor(countryId, startYear, endYear) {
+        function getCountryColor(countryId) {
             const average = findAvgByRegion(findRegionById(countryId), startYear, endYear);
             if (average === null) {
+                console.log(countryId + " has no data");
+                console.log(findRegionById(countryId));
                 return "black";
             }
             return valueToColor(average);
@@ -180,10 +180,10 @@
     });
 </script>
 
-<p id="minYearLable">minYear</p>
-<input type="range" id="minYear" value="1890" step="1" min="1870" max="2023" />
-<p id="maxYearLable">maxYear</p>
-<input type="range" id="maxYear" value="2023" step="1" min="1871" max="2024" />
+<p id="minYearLable">minYear = 1895</p>
+<input type="range" id="minYear" step="1" min="1895" max="2024" />
+<p id="maxYearLable">maxYear = 2024</p>
+<input type="range" id="maxYear" step="1" min="1895" max="2024" />
 
 <svg bind:this={svg}></svg>
 <div bind:this={tooltip} class="tooltip" style="display: none;"></div>
