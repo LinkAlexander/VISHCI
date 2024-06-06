@@ -33,8 +33,8 @@
 				<a href="/d3withdata">D3 with Data</a>
 			</li>
 
-			<li aria-current={$page.url.pathname === '/d3Globe' ? 'page' : undefined}>
-				<a href="/d3Globe">D3 Globe</a>
+			<li aria-current={$page.url.pathname === '/Map' ? 'page' : undefined}>
+				<a href="/Map">Map</a>
 			</li>
 <!--			<li aria-current={$page.url.pathname === '/d3Globe2' ? 'page' : undefined}>-->
 <!--				<a href="/d3Globe2">D3 Globe2</a>-->
