@@ -4,8 +4,6 @@
     import worldData from "./world-110m.json";
     import refData from "./data.json";
     import * as topojson from "topojson-client"; // Du brauchst die GeoJSON-Daten der Weltkarte
-    import { ColorConverter } from "three/examples/jsm/Addons.js";
-    import { empty } from "svelte/internal";
     export let data;
 
     /**
@@ -75,10 +73,6 @@
                 d3.select(tooltip).style("display", "none");
             });
 
-        // Define your color scale
-        const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
-
         // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
         /**
          * @param {number} countryId
@@ -90,11 +84,7 @@
 
             return "rgb(200, 200, 200)";
         }
-        // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
-        /**
-         * @param {string} name
-         * @returns {number}
-         */
+
         function findRegionById(ID) {
             let returnVal = refData.filter(function (data) {
                 return data.id == ID;
@@ -121,11 +111,11 @@
 
         function valueToColor(value) {
             // Holen der Mindest- und Höchstwerte aus den HTML-Attributen
-            const minValue = parseFloat(
-                document.getElementById("minValue").value,
+            const minValue = parseInt(
+                document.getElementById("minYear").value,
             );
-            const maxValue = parseFloat(
-                document.getElementById("maxValue").value,
+            const maxValue = parseInt(
+                document.getElementById("maxYear").value,
             );
 
             // Ensure the value is within the range [minValue, maxValue]
@@ -145,50 +135,41 @@
 
         // Funktion zum Neuzeichnen der Karte basierend auf den neuen Mindest- und Höchstwerten
         function redrawMap() {
-            // Holen der neuen Mindest- und Höchstwerte aus den Eingabefeldern
-            const minValue = parseFloat(
-                document.getElementById("minValue").value,
-            );
-            const maxValue = parseFloat(
-                document.getElementById("maxValue").value,
-            );
+            const minYear = parseInt(document.getElementById("minYear").value);
+            const maxYear = parseInt(document.getElementById("maxYear").value);
 
-            // Neuzeichnen der Karte mit den neuen Werten
-            svgElement
-                .selectAll(".country")
-                .style("fill", (d) =>
-                    getCountryColor(d.id, minValue, maxValue),
-                );
+            svgElement.selectAll(".country").style("fill", (d) => getCountryColor(d.id, minYear, maxYear));
         }
+
 
         // Eventlistener für Änderungen an den Eingabefeldern
         document
-            .getElementById("minValue")
+            .getElementById("minYear")
             .addEventListener("change", redrawMap);
         document
-            .getElementById("maxValue")
+            .getElementById("maxYear")
             .addEventListener("change", redrawMap);
 
         // Show slider values
         document
-            .getElementById("minValue")
+            .getElementById("minYear")
             .addEventListener("input", function () {
-                document.getElementById("minValueLable").innerHTML = "minValue = " + this.value;
+                document.getElementById("minYearLable").innerHTML = "minYear = " + this.value;
             });
 
         document
-            .getElementById("maxValue")
+            .getElementById("maxYear")
             .addEventListener("input", function () {
-                document.getElementById("maxValueLable").innerHTML = "maxValue = " + this.value;
+                document.getElementById("maxYearLable").innerHTML = "maxYear = " + this.value;
             });
 
     });
 </script>
 
-<p id="minValueLable">minValue = 3.4</p>
-<input type="range" id="minValue" value="3.4" step="0.1" min="3" max="8" />
-<p id="maxValueLable">maxValue = 8</p>
-<input type="range" id="maxValue" value="8" step="0.1" min="3" max="8" />
+<p id="minYearLable">minYear</p>
+<input type="range" id="minYear" value="1890" step="1" min="1870" max="2023" />
+<p id="maxYearLable">maxYear</p>
+<input type="range" id="maxYear" value="2023" step="1" min="1871" max="2024" />
 
 <svg bind:this={svg}></svg>
 <div bind:this={tooltip} class="tooltip" style="display: none;"></div>
