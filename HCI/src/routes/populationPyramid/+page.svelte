@@ -31,8 +31,11 @@
           .append("g")
           .attr("transform", `translate(${margin.left},${margin.top})`);
 
+    console.log(Math.max(...data2.map(obj => obj.male)));
+    console.log(Math.max(...data2.map(obj => obj.female)));
+
       const x = d3.scaleLinear()
-          .domain([-d3.max(data2, d => d.male), d3.max(data2, d => d.female)])
+          .domain([-Math.max(...data2.map(obj => obj.male))-2000, Math.max(...data2.map(obj => obj.female))+2000])
           .range([0, width]);
 
       svg.append("g")
