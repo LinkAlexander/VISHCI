@@ -20,7 +20,7 @@
 			</picture>
 		</span>
 		<br />
-		Hinter den Kulissen<br /> a Jonatan, Alexander und René App
+		IMDbehind the scenes<br /> a Jonatan, Alexander und René App
 	</h1>
  <!--		
 	

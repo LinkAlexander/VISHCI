@@ -1,22 +1,21 @@
 import { sql } from '../../db/db'
 
 export const load = async () => {
-    if (true) {
         let averagesByRegion;
-
         averagesByRegion = await sql`
         SELECT avg(rating.averagerating) AS avg,
-        aka.region FROM AKAS AS aka
-        JOIN ratings AS rating
+        aka.region,
+        title.startyear
+        FROM AKAS AS aka
+        JOIN ratings AS rating        
         ON aka.titleid = rating.tconst
-        GROUP BY aka.region
+        JOIN titlebasics as title
+        ON title.tconst = rating.tconst
+        GROUP BY aka.region, title.startyear 
         ORDER BY avg;
         `
 
         return {
             averagesByRegion
         }
-    } else {
-        return {};
-    }
 }
