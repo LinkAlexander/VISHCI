@@ -51,16 +51,25 @@
                 // Highlight the country on mouseover
                 d3.select(this).style("fill", "darkgrey");
 
-                console.log(d.id);
                 // Show tooltip parseFloat(number.toFixed(3))
                 //const avgValue = parseFloat(findAvgByRegion(findRegionById(d.id)).toFixed(3));
                 let avgValue = findAvgByRegion(findRegionById(d.id), startYear, endYear);
+                let countryname = findCountryById(d.id);
+
                 if (avgValue != null) {
                     avgValue = parseFloat(avgValue.toFixed(3));
                     d3.select(tooltip)
                         .style("display", "block")
                         .html(
-                            `Avg Value: ${avgValue !== null ? avgValue : "null"}`,
+                            `Country: ${countryname}<br>
+                            Avg Value: ${avgValue !== null ? avgValue : "null"}`,
+                        );
+                } else {
+                    d3.select(tooltip)
+                        .style("display", "block")
+                        .html(
+                            `Country: ${countryname}<br>
+                            No Data Available`,
                         );
                 }
             })
@@ -84,9 +93,18 @@
             let returnVal = refData.filter(function (data) {
                 return data.id == ID;
             });
-
             if (returnVal.length) {
                 return returnVal[0].code;
+            } else {
+                return null;
+            }
+        }
+        function findCountryById(ID) {
+            let returnVal = refData.filter(function (data) {
+                return data.id == ID;
+            });
+            if (returnVal.length) {
+                return returnVal[0].country;
             } else {
                 return null;
             }
