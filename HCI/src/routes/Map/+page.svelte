@@ -78,31 +78,6 @@
         // Define your color scale
         const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
-        // Create a group element for the legend
-        const legend = svgElement
-            .append("g")
-            .attr("transform", "translate(" + width + ", " + height + ")"); // Adjust these values to position your legend
-
-        // Create rectangles for each color in your scale
-        colorScale.domain().forEach((value, i) => {
-            const legendRow = legend
-                .append("g")
-                .attr("transform", `translate(0, ${i * 20})`); // Adjust these values to position your color swatches
-
-            legendRow
-                .append("rect")
-                .attr("width", 10)
-                .attr("height", 10)
-                .attr("fill", colorScale(value));
-
-            legendRow
-                .append("text")
-                .attr("x", -10)
-                .attr("y", 10)
-                .attr("text-anchor", "end")
-                .style("text-transform", "capitalize")
-                .text(value);
-        });
 
         // Beispiel-Funktion zur Farbgebung basierend auf der Länder-ID
         /**
@@ -110,7 +85,6 @@
          */
         function getCountryColor(countryId) {
             // Hier kannst du deine Logik zur Farbgebung einfügen
-            const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
             const average = findAvgByRegion(findRegionById(countryId));
             if (average != null) return valueToColor(average); // USA
 
@@ -208,8 +182,6 @@
                 document.getElementById("maxValueLable").innerHTML = "maxValue = " + this.value;
             });
 
-        //--------------------------------------
-        legend.raise();
     });
 </script>
 
