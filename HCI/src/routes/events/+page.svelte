@@ -3,33 +3,52 @@
     import * as d3 from 'd3';
     import { writable } from 'svelte/store';
 
+    export let data;
+
+    let tempdata = data.genreByYear;
+
     const selectedEvent = writable("Complete Timeline");
     const selectedGenres = writable([]);
 
     const events = {
-        "Complete Timeline": [1900, 2020],
+        "Complete Timeline": [1874, 2031],
         "World War I": [1914, 1918],
         "World War II": [1939, 1945],
         "Moon Landing": [1959, 1969],
         "Fall of Berlin Wall": [1979, 1989]
     };
 
-    let svg, x, xAxis, y, area, stackedData, tooltip;
-    let genres = ["Action", "Drama", "Comedy", "Thriller", "Romance", "Adventure", "Fantasy", "Science Fiction", "Horror", "Mystery", "Documentary", "Animation", "Family", "Musical", "Western", "War", "Biography", "History", "Sport"];
+    let svg, x, xAxis, y, yAxis, area, stackedData, tooltip;
+    let movieData = [];  // Globally define movieData
+    let genres = ["drama", "comedy", "talk_Show", "short", "documentary", "romance", "news", "family", "reality_TV", "animation", "unknown", "crime", "action", "adventure", "music", "game_Show", "adult", "sport", "fantasy", "mystery", "horror", "thriller", "history", "biography", "sci_fi", "musical", "war", "western", "film_noir"];
 
     function updateChart(event) {
         const selectedOption = event.target.value;
         selectedEvent.set(selectedOption);
         const [startYear, endYear] = events[selectedOption];
 
-        if(event.target.value == "Complete Timeline"){
+        if (event.target.value == "Complete Timeline") {
             x.domain([startYear, endYear]);
         } else {
             x.domain([startYear - 5, endYear + 5]);
         }
         xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(10));
 
+        // Filter data based on the selected time range
+        const filteredData = movieData.filter(d => d.year >= startYear && d.year <= endYear);
+
+        // Update y domain based on the filtered data
+        y.domain([0, d3.max(filteredData, d => d3.max(keys, key => d[key]))]);
+        yAxis.transition().duration(1000).call(d3.axisLeft(y).ticks(10));
+
+        // Update stacked data
+        const newStackedData = d3.stack().keys(keys)(filteredData);
+
         svg.selectAll(".myArea")
+            .data(newStackedData)
+            .join("path")
+            .attr("class", d => "myArea " + d.key)
+            .style("fill", d => color(d.key))
             .transition()
             .duration(1000)
             .attr("d", area)
@@ -37,14 +56,20 @@
     }
 
     function updateGenres(event) {
-    const genre = event.target.value;
-    selectedGenres.update(genres => {
-        if (event.target.checked) {
-            return [...genres, genre];
-        } else {
-            return genres.filter(g => g !== genre);
-        }
-    });
+        const genre = event.target.value;
+        selectedGenres.update(genres => {
+            if (event.target.checked) {
+                return [...genres, genre];
+            } else {
+                return genres.filter(g => g !== genre);
+            }
+        });
+
+        // Update display of areas based on selected genres
+        svg.selectAll(".myArea")
+            .transition()
+            .duration(1000)
+            .style("display", d => selectedGenres.includes(d.key) ? "initial" : "none");
     }
 
     onMount(() => {
@@ -65,23 +90,23 @@
             .attr("width", width)
             .attr("height", height);
 
-        var data = [];
-        for (var year = 1900; year <= 2020; year++) {
-            var yearData = { year: year };
+        var yearData;
+        for (const d in tempdata) {
+            yearData = { year: +tempdata[d]['startyear'] };  // Ensure year is a number
             genres.forEach(genre => {
-                yearData[genre] = Math.floor(Math.random() * 50) + 50;
+                yearData[genre] = +tempdata[d][genre];  // Ensure genre counts are numbers
             });
-            data.push(yearData);
+            movieData.push(yearData);
         }
 
-        var keys = Object.keys(data[0]).slice(1);
+        var keys = Object.keys(movieData[0]).slice(1);
 
         var color = d3.scaleOrdinal()
             .domain(keys)
             .range(d3.schemeCategory10);
 
         x = d3.scaleLinear()
-            .domain([1900, 2020])
+            .domain([1874, 2031])
             .range([0, width]);
         xAxis = svg.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -101,14 +126,14 @@
             .attr("text-anchor", "start");
 
         y = d3.scaleLinear()
-            .domain([0, 1000])
+            .domain([0, d3.max(movieData, d => d3.max(keys, key => d[key]))])
             .range([height, 0]);
-        svg.append("g")
+        yAxis = svg.append("g")
             .call(d3.axisLeft(y).ticks(10));
 
         stackedData = d3.stack()
             .keys(keys)
-            (data);
+            (movieData);
 
         tooltip = d3.select("#my_dataviz")
             .append("div")
@@ -124,9 +149,9 @@
             .style("top", (margin.top + 10) + "px");
 
         area = d3.area()
-            .x(function (d) { return x(d.data.year); })
-            .y0(function (d) { return y(d[0]); })
-            .y1(function (d) { return y(d[1]); });
+            .x(d => x(d.data.year))
+            .y0(d => y(d[0]))
+            .y1(d => y(d[1]));
 
         svg.append("g")
             .attr("clip-path", "url(#clip)")
@@ -134,27 +159,24 @@
             .data(stackedData)
             .enter()
             .append("path")
-            .attr("class", function (d) { return "myArea " + d.key; })
-            .style("fill", function (d) { return color(d.key); })
+            .attr("class", d => "myArea " + d.key)
+            .style("fill", d => color(d.key))
             .attr("d", area)
-            
             .on("mouseover", function (event, d) {
                 tooltip.style("opacity", 1);
                 tooltip.html("Genre: " + d.key);
             })
-            .on("mouseout", function (d) {
+            .on("mouseout", function () {
                 tooltip.style("opacity", 0);
             })
             .on("mousemove", function (event, d) {
                 var mouseX = d3.pointer(event)[0];
                 var hoveredYear = Math.round(x.invert(mouseX));
                 var mouseY = d3.pointer(event)[1];
-                var hoveredData = data.find(function (row) {
-                    return row.year === hoveredYear;
-                });
+                var hoveredData = movieData.find(row => row.year === hoveredYear);
                 if (hoveredData) {
                     var tooltipText = "Year: " + hoveredYear;
-                    keys.forEach(function (key) {
+                    keys.forEach(key => {
                         var yValue = y(hoveredData[key]);
                         if (mouseY <= yValue) {
                             tooltipText += "<br>" + key + ": " + hoveredData[key];
@@ -167,12 +189,12 @@
                 }
             });
 
-        var highlight = function (d) {
+        var highlight = function (event, d) {
             d3.selectAll(".myArea").style("opacity", .1);
-            d3.select("." + d).style("opacity", 1);
+            d3.select(".myArea." + d).style("opacity", 1);
         };
 
-        var noHighlight = function (d) {
+        var noHighlight = function () {
             d3.selectAll(".myArea").style("opacity", 1);
         };
 
@@ -182,10 +204,10 @@
             .enter()
             .append("rect")
             .attr("x", 1000)
-            .attr("y", function (d, i) { return 10 + i * (size + 5); })
+            .attr("y", (d, i) => 10 + i * (size + 5))
             .attr("width", size)
             .attr("height", size)
-            .style("fill", function (d) { return color(d); })
+            .style("fill", d => color(d))
             .on("mouseover", highlight)
             .on("mouseleave", noHighlight);
 
@@ -194,9 +216,9 @@
             .enter()
             .append("text")
             .attr("x", 1000 + size * 1.2)
-            .attr("y", function (d, i) { return 10 + i * (size + 5) + (size / 2); })
-            .style("fill", function (d) { return color(d); })
-            .text(function (d) { return d; })
+            .attr("y", (d, i) => 10 + i * (size + 5) + (size / 2))
+            .style("fill", d => color(d))
+            .text(d => d)
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle")
             .on("mouseover", highlight)
@@ -257,3 +279,4 @@
     </div>
     <div id="my_dataviz"></div>
 </div>
+    
