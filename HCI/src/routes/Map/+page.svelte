@@ -3,7 +3,7 @@
     import * as d3 from "d3";
     import worldData from "./world-110m.json";
     import refData from "./data.json";
-    import * as topojson from "topojson-client"; // Du brauchst die GeoJSON-Daten der Weltkarte
+    import * as topojson from "topojson-client";
     export let data;
 
     /**
@@ -46,14 +46,15 @@
             .append("path")
             .attr("d", path)
             .attr("class", "country")
-            .style("fill", (d) => getCountryColor(d.id)) // getCountryColor ist eine Funktion zur Bestimmung der Farbe
+            .style("fill", (d) => getCountryColor(d.id, startYear, endYear))
             .on("mouseover", function (event, d) {
                 // Highlight the country on mouseover
                 d3.select(this).style("fill", "darkgrey");
 
                 // Show tooltip parseFloat(number.toFixed(3))
                 //const avgValue = parseFloat(findAvgByRegion(findRegionById(d.id)).toFixed(3));
-                let avgValue = findAvgByRegion(findRegionById(d.id));
+                let avgValue = findAvgByRegion(findRegionById(d.id), startYear, endYear);
+
                 if (avgValue != null) {
                     avgValue = parseFloat(avgValue.toFixed(3));
                     d3.select(tooltip)
@@ -92,9 +93,11 @@
         }
 
         function findAvgByRegion(region, startYear, endYear) {
+            console.log("Region: " + region);
             let returnVal = data.averagesByRegion.filter(function (d) {
-                return d.region == region && d.startyear >= startYear && d.startyear <= endYear;
+                return d.region === region && d.startyear >= startYear && d.startyear <= endYear;
             });
+
             if (returnVal.length) {
                 const avg = returnVal.reduce((acc, curr) => acc + curr.avg, 0) / returnVal.length;
                 return avg;
@@ -161,6 +164,18 @@
             .getElementById("maxYear")
             .addEventListener("input", function () {
                 document.getElementById("maxYearLable").innerHTML = "maxYear = " + this.value;
+            });
+        document
+            .getElementById("minYear")
+            .addEventListener("change", function() {
+                startYear = parseInt(this.value);
+                redrawMap();
+            });
+        document
+            .getElementById("maxYear")
+            .addEventListener("change", function() {
+                endYear = parseInt(this.value);
+                redrawMap();
             });
     });
 </script>
