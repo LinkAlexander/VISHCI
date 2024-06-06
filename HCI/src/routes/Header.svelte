@@ -45,6 +45,9 @@
 			<li aria-current={$page.url.pathname === '/Balken' ? 'page' : undefined}>
 				<a href="/Balken">Balkendiagramm</a>
 			</li>
+			<li aria-current={$page.url.pathname === '/populationPyramid' ? 'page' : undefined}>
+				<a href="/populationPyramid">Bevölkerungspyramide</a>
+			</li>
 			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>
 				<a href="/Scatter">Scatterplot</a>
 			</li>
