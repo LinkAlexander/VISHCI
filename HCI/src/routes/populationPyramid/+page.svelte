@@ -2,23 +2,27 @@
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
 
-  let data = [
-      {"age": "90+", "male": 1000000, "female": 950000},
-      {"age": "80-90", "male": 900000, "female": 850000},
-      {"age": "70-80", "male": 800000, "female": 750000},
-      {"age": "60-70", "male": 700000, "female": 650000},
-      {"age": "50-60", "male": 600000, "female": 550000},
-      {"age": "40-50", "male": 500000, "female": 450000},
-      {"age": "30-40", "male": 400000, "female": 350000},
-      {"age": "20-30", "male": 300000, "female": 250000},
-      {"age": "10-20", "male": 200000, "female": 150000},
-      {"age": "0-10", "male": 100000, "female": 50000}
+  export let data;
+  console.log(data.population);
+
+  let data2 = [
+      {"age": "100-109", "male": data.population[0][10].count, "female": data.population[1][10].count},
+      {"age": "90-99", "male": data.population[0][9].count, "female": data.population[1][9].count},
+      {"age": "80-89", "male": data.population[0][8].count, "female": data.population[1][8].count},
+      {"age": "70-79", "male": data.population[0][7].count, "female": data.population[1][7].count},
+      {"age": "60-69", "male": data.population[0][6].count, "female": data.population[1][6].count},
+      {"age": "50-59", "male": data.population[0][5].count, "female": data.population[1][5].count},
+      {"age": "40-49", "male": data.population[0][4].count, "female": data.population[1][4].count},
+      {"age": "30-39", "male": data.population[0][3].count, "female": data.population[1][3].count},
+      {"age": "20-29", "male": data.population[0][2].count, "female": data.population[1][2].count},
+      {"age": "10-19", "male": data.population[0][1].count, "female": data.population[1][1].count},
+      {"age": "0-9", "male": data.population[0][0].count, "female": data.population[1][0].count}
   ];
 
   onMount(() => {
       const margin = {top: 20, right: 30, bottom: 40, left: 60},
-          width = 800 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
+          width = 1000 - margin.left - margin.right,
+          height = 600 - margin.top - margin.bottom;
 
       const svg = d3.select("#pyramid")
           .append("svg")
@@ -28,7 +32,7 @@
           .attr("transform", `translate(${margin.left},${margin.top})`);
 
       const x = d3.scaleLinear()
-          .domain([-d3.max(data, d => d.male), d3.max(data, d => d.female)])
+          .domain([-d3.max(data2, d => d.male), d3.max(data2, d => d.female)])
           .range([0, width]);
 
       svg.append("g")
@@ -38,14 +42,14 @@
 
       const y = d3.scaleBand()
           .range([0, height])
-          .domain(data.map(d => d.age))
+          .domain(data2.map(d => d.age))
           .padding(0.1);
 
       svg.append("g")
           .call(d3.axisLeft(y));
 
       svg.selectAll(".bar.male")
-          .data(data)
+          .data(data2)
           .enter()
           .append("rect")
           .attr("class", "bar male")
@@ -56,7 +60,7 @@
           .attr("fill", "steelblue");
 
       svg.selectAll(".bar.female")
-          .data(data)
+          .data(data2)
           .enter()
           .append("rect")
           .attr("class", "bar female")
