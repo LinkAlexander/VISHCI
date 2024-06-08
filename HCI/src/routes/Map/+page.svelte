@@ -156,24 +156,61 @@
             svgElement.selectAll(".country").style("fill", (d) => getCountryColor(d.id, startYear, endYear));
         }
 
-
-        function valueToColor(value) {
-            if (value < 1 || value > 10) {
-                return '#000000'; // return black if value is out of range
-            }
-
-            const scale = [
-                '#a50026',
+        const colorScale = d3.scaleThreshold()
+            .domain(["< 4", "4 - 5 ", "5 - 6", "6 - 7", "7 - 8", " >= 8"])
+            .range([
                 '#d73027',
                 '#fc8d59',
                 '#fee08b',
-                '#ffffbf',
                 '#d9ef8b',
                 '#91cf60',
-                '#1a9850',
+                '#1a9850']);
+        // Create legend group
+        const legend = svgElement.append('g')
+            .attr('transform', `translate(${75}, ${height - 200 })`);
+        // Add labels
+        legend.selectAll('text')
+            .data(colorScale.domain())
+            .enter()
+            .append('text')
+            .attr('x', 30)
+            .attr('y', (d, i) => i * 20 + 15)
+            .text(d => `${d}`);
+        // Add legend title
+        legend.append("text")
+            .attr("class", "legend-title")
+            .attr("x", -50)
+            .attr("y", -20) // position of the title, adjust as needed
+            .text("Durchschnittliches Rating")
+        // Create rectangles for each color in scale
+        legend.selectAll('rect')
+            .data(colorScale.range())
+            .enter()
+            .append('rect')
+            .attr('y', (d, i) => i * 20)
+            .attr('width', 20)
+            .attr('height', 20)
+            .style('fill', d => d);
+
+        function valueToColor(value) {
+            const scale = [
+                '#d73027', // for values < 4
+                '#fc8d59', // for values >= 4 and < 5
+                '#fee08b', // for values >= 5 and < 6
+                '#d9ef8b', // for values >= 6 and < 7
+                '#91cf60', // for values >= 7 and < 8
+                '#1a9850', // for values >= 8
             ];
 
-            const index = Math.floor((value - 1) / (10 - 1) * (scale.length - 1));
+            let index;
+            if (value < 4) {
+                index = 0;
+            } else if (value >= 8) {
+                index = scale.length - 1;
+            } else {
+                index = Math.floor(value) - 3;
+            }
+
             return scale[index];
         }
 
