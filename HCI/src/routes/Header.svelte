@@ -48,15 +48,15 @@
 			<li aria-current={$page.url.pathname === '/populationPyramid' ? 'page' : undefined}>
 				<a href="/populationPyramid">Bevölkerungspyramide</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>
-				<a href="/Scatter">Scatterplot</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/test3' ? 'page' : undefined}>
-				<a href="/test3">Test 3</a>
-			</li>
-			<li aria-current={$page.url.pathname === '/test4' ? 'page' : undefined}>
-				<a href="/test4">Test 4</a>
-			</li>
+<!--			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>-->
+<!--				<a href="/Scatter">Scatterplot</a>-->
+<!--			</li>-->
+<!--			<li aria-current={$page.url.pathname === '/test3' ? 'page' : undefined}>-->
+<!--				<a href="/test3">Test 3</a>-->
+<!--			</li>-->
+<!--			<li aria-current={$page.url.pathname === '/test4' ? 'page' : undefined}>-->
+<!--				<a href="/test4">Test 4</a>-->
+<!--			</li>-->
 
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
