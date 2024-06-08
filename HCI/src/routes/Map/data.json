@@ -18,6 +18,11 @@
     "population": 33933611
   },
   {
+    "country": "Antarctica",
+    "code": "ATA",
+    "id": "010"
+  },
+  {
     "country": "Albania",
     "code": "AL",
     "id": "008",

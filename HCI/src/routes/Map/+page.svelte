@@ -1,9 +1,10 @@
 <script>
-    import { onMount } from "svelte";
+    import {onMount} from "svelte";
     import * as d3 from "d3";
     import worldData from "./world-110m.json";
     import refData from "./data.json";
     import * as topojson from "topojson-client";
+
     export let data;
 
     /**
@@ -47,6 +48,8 @@
             .attr("d", path)
             .attr("class", "country")
             .style("fill", (d) => getCountryColor(d.id, startYear, endYear))
+            .style("stroke", "black") // this will create the black outline
+            .style("stroke-width", "1px") // this will set the width of the outline
             .on("mouseover", function (event, d) {
                 // Highlight the country on mouseover
                 d3.select(this).style("fill", "darkgrey");
@@ -114,10 +117,13 @@
             let returnVal = data.averagesByRegion.filter(function (d) {
                 return d.region === region && d.startyear >= startYear && d.startyear <= endYear;
             });
-
-            if (returnVal.length) {
-                const avg = returnVal.reduce((acc, curr) => acc + curr.avg, 0) / returnVal.length;
-                return avg;
+            if (returnVal.length > 0) {
+                console.log(returnVal)
+                let avg = 0;
+                for(let i = 0; i < returnVal.length; i++) {
+                    avg += Number(returnVal[i].avg);
+                }
+                return avg / returnVal.length;
             } else {
                 return null;
             }
@@ -136,17 +142,13 @@
                 countryId == 238 ||
                 countryId == 10 ||
                 countryId == 4 ||
-                countryId == 999
+                countryId == 999 ||
+                average === null
             ) {
-
-                return "red"
+                return "Gray"
             }
 
-            if (average === null) {
-                return "black";
-            }
-            return "yellow"
-            // return valueToColor(average);
+            return valueToColor(average);
         }
 
         function redrawMap() {
@@ -156,37 +158,47 @@
 
 
         function valueToColor(value) {
-            // Holen der Mindest- und Höchstwerte aus den HTML-Attributen
-            const minValue = parseInt(
-                document.getElementById("minYear").value,
-            );
-            const maxValue = parseInt(
-                document.getElementById("maxYear").value,
-            );
+            if (value < 1 || value > 10) {
+                return '#000000'; // return black if value is out of range
+            }
 
-            // Ensure the value is within the range [minValue, maxValue]
-            value = Math.min(Math.max(value, minValue), maxValue);
+            const scale = [
+                '#a50026',
+                '#d73027',
+                '#fc8d59',
+                '#fee08b',
+                '#ffffbf',
+                '#d9ef8b',
+                '#91cf60',
+                '#1a9850',
+            ];
 
-            // Normalize the value to the range [0, 1]
-            let proportion = (value - minValue) / (maxValue - minValue);
-
-            // Calculate the red and green components
-            let red = Math.round(255 * (1 - proportion));
-            let green = Math.round(255 * proportion);
-            let blue = 0; // Blue remains 0 for a red to green gradient
-
-            // Return the color in RGB format
-            return `rgb(${red}, ${green}, ${blue})`;
+            const index = Math.floor((value - 1) / (10 - 1) * (scale.length - 1));
+            return scale[index];
         }
 
 
         // Eventlistener für Änderungen an den Eingabefeldern
         document
             .getElementById("minYear")
-            .addEventListener("change", redrawMap);
+            .addEventListener("change", function() {
+                startYear = parseInt(this.value);
+                if (startYear > endYear) {
+                    startYear = endYear;
+                    this.value = startYear; // update the input field
+                }
+                redrawMap();
+            });
         document
             .getElementById("maxYear")
-            .addEventListener("change", redrawMap);
+            .addEventListener("change", function() {
+                endYear = parseInt(this.value);
+                if (endYear < startYear) {
+                    endYear = startYear;
+                    this.value = endYear; // update the input field
+                }
+                redrawMap();
+            });
 
         // Show slider values
         document
