@@ -278,20 +278,29 @@
     });
 </script>
 
-<p id="minYearLable">minYear = 1895</p>
-<input type="range" id="minYear" step="1" min="1895" max="2024" />
-<p id="maxYearLable">maxYear = 2024</p>
-<input type="range" id="maxYear" step="1" min="1895" max="2024" />
+<div style="display: flex; justify-content: space-between; align-items: center; width: fit-content;">
+    <div style="display: flex; align-items: center; margin-right: 10px;">
+        <p id="minYearLable" style="margin-right: 10px;">minYear = 1895</p>
+        <input type="range" id="minYear" step="1" min="1895" max="2024" />
+    </div>
 
-<svg bind:this={svg}></svg>
+    <div style="display: flex; align-items: center; margin-right: 10px;">
+        <p id="maxYearLable" style="margin-right: 10px;">maxYear = 2024</p>
+        <input type="range" id="maxYear" step="1" min="1895" max="2024" />
+    </div>
+
+    <div style="display: flex; align-items: center;">
+        <p style="margin-right: 10px;">Is Adult:</p>
+        <select id="isAdult" bind:value={isAdult}>
+            <option value="all">All</option>
+            <option value="true">True</option>
+            <option value="false">False</option>
+        </select>
+    </div>
+</div>
+
 <div bind:this={tooltip} class="tooltip" style="display: none;"></div>
-<p>Is Adult:</p>
-<select id="isAdult" bind:value={isAdult}>
-    <option value="all">All</option>
-    <option value="true">True</option>
-    <option value="false">False</option>
-
-</select>
+<svg bind:this={svg}></svg>
 <style>
     .tooltip {
         position: absolute;
