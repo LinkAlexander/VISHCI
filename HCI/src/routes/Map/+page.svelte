@@ -15,6 +15,7 @@
     let countries;
     let startYear = 1895
     let endYear = 2024;
+    let isAdult = "all";
 
     onMount(async () => {
         const width = 960;
@@ -115,8 +116,15 @@
 
         function findAvgByRegion(region, startYear, endYear) {
             let returnVal = data.averagesByRegion.filter(function (d) {
-                return d.region === region && d.startyear >= startYear && d.startyear <= endYear;
+                if (isAdult === 'all') {
+                    return d.region === region && d.startyear >= startYear && d.startyear <= endYear;
+                } else if (isAdult === 'true') {
+                    return d.region === region && d.startyear >= startYear && d.startyear <= endYear && d.isadult;
+                } else { // isAdult === 'false'
+                    return d.region === region && d.startyear >= startYear && d.startyear <= endYear && !d.isadult;
+                }
             });
+            console.log(returnVal)
             if (returnVal.length > 0) {
                 console.log(returnVal)
                 let avg = 0;
@@ -157,7 +165,7 @@
         }
 
         const colorScale = d3.scaleThreshold()
-            .domain(["< 4", "4 - 5 ", "5 - 6", "6 - 7", "7 - 8", " >= 8"])
+            .domain(["<= 4", "(4 - 5) ", "[5 - 6)", "[6 - 7)", "[7 - 8)", " >= 8"])
             .range([
                 '#d73027',
                 '#fc8d59',
@@ -261,8 +269,13 @@
                 endYear = parseInt(this.value);
                 redrawMap();
             });
+        document
+            .getElementById("isAdult")
+            .addEventListener("change", function() {
+                isAdult = this.value;
+                redrawMap();
+            });
     });
-
 </script>
 
 <p id="minYearLable">minYear = 1895</p>
@@ -272,7 +285,13 @@
 
 <svg bind:this={svg}></svg>
 <div bind:this={tooltip} class="tooltip" style="display: none;"></div>
+<p>Is Adult:</p>
+<select id="isAdult" bind:value={isAdult}>
+    <option value="all">All</option>
+    <option value="true">True</option>
+    <option value="false">False</option>
 
+</select>
 <style>
     .tooltip {
         position: absolute;
