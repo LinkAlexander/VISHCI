@@ -290,11 +290,11 @@
     </div>
 
     <div style="display: flex; align-items: center;">
-        <p style="margin-right: 10px;">Is Adult:</p>
+        <p style="margin-right: 10px;">Filter Adult Films:</p>
         <select id="isAdult" bind:value={isAdult}>
-            <option value="all">All</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
+            <option value="all">All Films</option>
+            <option value="true">Only Adult Films</option>
+            <option value="false">No Adult Films</option>
         </select>
     </div>
 </div>
