@@ -69,7 +69,7 @@
                         .html(
                             `Country: ${countryname}<br>
                             Avg Value: ${avgValue !== null ? avgValue : "null"}
-                            <br># of Countries: ${count}`,
+                            <br># of Movies: ${count}`,
                         );
                 } else {
                     d3.select(tooltip)
