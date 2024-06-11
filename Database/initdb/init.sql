@@ -111,6 +111,7 @@ FROM temp_titlebasics;
 
 DROP TABLE temp_titlebasics;
 
+/*
 --CREATE TABLE crew
 CREATE TABLE temp_crew (
     tconst VARCHAR(100),
@@ -138,7 +139,9 @@ SELECT
 FROM temp_crew;
 
 DROP TABLE temp_crew;
+*/
 
+/*
 --CREATE TABLE episode
 CREATE TABLE episode (
     tconst VARCHAR(100),
@@ -168,7 +171,9 @@ SELECT
 FROM temp_episode;
 
 DROP TABLE temp_episode;
+*/
 
+/*
 --CREATE TABLE principals
 CREATE TABLE principals (
     tconst VARCHAR(100),
@@ -184,3 +189,4 @@ COPY principals (tconst, ordering, nconst, category, job, characters)
 FROM '/docker-entrypoint-initdb.d/data/title.principals.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
+*/
