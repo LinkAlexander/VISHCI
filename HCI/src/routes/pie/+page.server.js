@@ -1,7 +1,7 @@
 import { sql } from '../../db/db'
 
 export const load = async () => {
-    const result = await sql`
+    let result = await sql`
   WITH split_professions AS (
     SELECT
         unnest(primaryprofession) AS profession
@@ -20,10 +20,19 @@ GROUP BY
 ORDER BY
     count DESC;
   `
-
+    result = berufeAnpassen(result);
 
     return {
         result
     }
 
+}
+
+function berufeAnpassen(daten) {
+    return daten.map(eintrag => {
+        if (eintrag.profession === '\\N') {
+            eintrag.profession = 'no profession';
+        }
+        return eintrag;
+    });
 }

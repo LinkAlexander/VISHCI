@@ -29,9 +29,9 @@
 			</li>
 			-->
 
-			<li aria-current={$page.url.pathname === '/d3withdata' ? 'page' : undefined}>
-				<a href="/d3withdata">D3 with Data</a>
-			</li>
+<!--			<li aria-current={$page.url.pathname === '/d3withdata' ? 'page' : undefined}>-->
+<!--				<a href="/d3withdata">D3 with Data</a>-->
+<!--			</li>-->
 
 			<li aria-current={$page.url.pathname === '/Map' ? 'page' : undefined}>
 				<a href="/Map">Map</a>
