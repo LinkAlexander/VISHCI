@@ -48,6 +48,9 @@
 			<li aria-current={$page.url.pathname === '/populationPyramid' ? 'page' : undefined}>
 				<a href="/populationPyramid">Bevölkerungspyramide</a>
 			</li>
+			<li aria-current={$page.url.pathname === '/pie' ? 'page' : undefined}>
+				<a href="/pie">Pie</a>
+			</li>
 <!--			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>-->
 <!--				<a href="/Scatter">Scatterplot</a>-->
 <!--			</li>-->
