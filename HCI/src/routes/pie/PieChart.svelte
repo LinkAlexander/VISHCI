@@ -2,9 +2,11 @@
 <script>
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
+  export let data;
+  console.log(data);
 
   // Sample data for the pie chart
-  let data = [
+  data = [
     { label: 'A', value: 20 },
     { label: 'B', value: 30 },
     { label: 'C', value: 50 }
@@ -59,11 +61,5 @@
 <style>
   .pie-chart-container {
     text-align: center;
-  }
-
-  .arc text {
-    font-size: 12px;
-    fill: white;
-    text-anchor: middle;
   }
 </style>
