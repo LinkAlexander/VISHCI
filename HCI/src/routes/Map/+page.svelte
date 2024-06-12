@@ -57,7 +57,9 @@
 
                 // Show tooltip parseFloat(number.toFixed(3))
                 //const avgValue = parseFloat(findAvgByRegion(findRegionById(d.id)).toFixed(3));
-                let avgValue = findAvgByRegion(findRegionById(d.id), startYear, endYear);
+                let result = findAvgByRegion(findRegionById(d.id), startYear, endYear)
+                let avgValue = result.avg;
+                let count = result.count;
                 let countryname = findCountryById(d.id);
 
                 if (avgValue != null) {
@@ -66,7 +68,8 @@
                         .style("display", "block")
                         .html(
                             `Country: ${countryname}<br>
-                            Avg Value: ${avgValue !== null ? avgValue : "null"}`,
+                            Avg Value: ${avgValue !== null ? avgValue : "null"}
+                            <br># of Movies: ${count}`,
                         );
                 } else {
                     d3.select(tooltip)
@@ -124,20 +127,20 @@
                     return d.region === region && d.startyear >= startYear && d.startyear <= endYear && !d.isadult;
                 }
             });
-            console.log(returnVal)
             if (returnVal.length > 0) {
-                console.log(returnVal)
                 let avg = 0;
+                let count = 0;
                 for(let i = 0; i < returnVal.length; i++) {
                     avg += Number(returnVal[i].avg);
+                    count += Number(returnVal[i].count);
                 }
-                return avg / returnVal.length;
+                return { avg: avg / returnVal.length, count: count };
             } else {
-                return null;
+                return { avg: null, count: 0 };
             }
         }
         function getCountryColor(countryId) {
-            const average = findAvgByRegion(findRegionById(countryId), startYear, endYear);
+            const average = findAvgByRegion(findRegionById(countryId), startYear, endYear).avg;
 
             // south sudan 728
             // French Southern and Antarctic Lands 260
@@ -290,11 +293,11 @@
     </div>
 
     <div style="display: flex; align-items: center;">
-        <p style="margin-right: 10px;">Is Adult:</p>
+        <p style="margin-right: 10px;">Filter Adult Films:</p>
         <select id="isAdult" bind:value={isAdult}>
-            <option value="all">All</option>
-            <option value="true">True</option>
-            <option value="false">False</option>
+            <option value="all">All Films</option>
+            <option value="true">Only Adult Films</option>
+            <option value="false">No Adult Films</option>
         </select>
     </div>
 </div>
