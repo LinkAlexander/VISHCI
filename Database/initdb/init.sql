@@ -1,17 +1,30 @@
---name.basics.tsv import
-CREATE TABLE ratings (
+--name.basics.tsv import------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE temp_ratings (
     tconst VARCHAR(100),
     averageRating FLOAT,
     numVotes INT
 );
 
+CREATE TABLE ratings (
+    tconst VARCHAR(100),
+    averageRating FLOAT
+);
 
-COPY ratings (tconst, averageRating, numVotes) 
+
+COPY temp_ratings (tconst, averageRating, numVotes) 
 FROM '/docker-entrypoint-initdb.d/data/title.ratings.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
 
---name.basics.tsv import
+INSERT INTO ratings (tconst, averageRating)
+SELECT
+    tconst,
+    averageRating
+FROM temp_ratings;
+
+DROP TABLE temp_ratings;
+
+--name.basics.tsv import ------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE temp_namebasics (
     nconst VARCHAR(100),
     primaryName VARCHAR(120),
@@ -21,12 +34,9 @@ CREATE TABLE temp_namebasics (
     knownForTitles VARCHAR(100)
 );
 CREATE TABLE namebasics (
-    nconst VARCHAR(100),
-    primaryName VARCHAR(120),
     birthYear INT,
     deathYear INT,
-    primaryProfession TEXT[],
-    knownForTitles VARCHAR(100)
+    primaryProfession TEXT[]
 );
 
 
@@ -35,21 +45,18 @@ FROM '/docker-entrypoint-initdb.d/data/name.basics.tsv'
 DELIMITER E'\t' 
 CSV HEADER;
 
-INSERT INTO namebasics (nconst, primaryName, birthYear, deathYear, primaryProfession, knownForTitles)
+INSERT INTO namebasics (birthYear, deathYear, primaryProfession)
 SELECT
-    nconst,
-    primaryName,
     NULLIF(birthYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
     NULLIF(deathYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
-    string_to_array(primaryProfession, ','),
-    string_to_array(knownForTitles, ',')
+    string_to_array(primaryProfession, ',')
 FROM temp_namebasics;
 
 DROP TABLE temp_namebasics;
 
 
---CREATE TABLE akas
-CREATE TABLE akas (
+--CREATE TABLE akas------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE temp_akas (
     titleId VARCHAR(100),
     ordering INT,
     title VARCHAR(870),
@@ -60,13 +67,26 @@ CREATE TABLE akas (
     isOriginalTitle BOOLEAN
 );
 
+CREATE TABLE akas (
+    titleId VARCHAR(100),
+    region VARCHAR(100)
+);
 
-COPY akas (titleId, ordering, title, region, language, types, attributes, isOriginalTitle) 
+
+COPY temp_akas (titleId, ordering, title, region, language, types, attributes, isOriginalTitle) 
 FROM '/docker-entrypoint-initdb.d/data/title.akas.tsv' 
 DELIMITER E'\t' 
 CSV HEADER;
 
---CREATE TABLE titlebasics
+INSERT INTO akas (titleId, region)
+SELECT
+    titleId,
+    region
+FROM temp_akas;
+
+DROP TABLE temp_akas;
+
+--CREATE TABLE titlebasics------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE temp_titlebasics (
     tconst VARCHAR(100),
     titleType VARCHAR(100),
@@ -80,13 +100,8 @@ CREATE TABLE temp_titlebasics (
 );
 CREATE TABLE titlebasics (
     tconst VARCHAR(100),
-    titleType VARCHAR(100),
-    primaryTitle VARCHAR(450),
-    originalTitle VARCHAR(450),
     isAdult BOOLEAN,
     startYear INT,
-    endYear INT,
-    runtimeMinutes INT,
     genres TEXT[]
 );
 
@@ -96,23 +111,18 @@ FROM '/docker-entrypoint-initdb.d/data/title.basics.tsv'
 DELIMITER E'\t' 
 CSV HEADER;
 
-INSERT INTO titlebasics (tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres)
+INSERT INTO titlebasics (tconst, isAdult, startYear, genres)
 SELECT
     tconst,
-    titleType,
-    primaryTitle,
-    originalTitle,
     isAdult,
     NULLIF(startYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
-    NULLIF(endYear, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
-    NULLIF(runtimeMinutes, E'\\N')::INT,  -- \n in NULL konvertieren und in INT umwandeln
     string_to_array(genres, ',')
 FROM temp_titlebasics;
 
 DROP TABLE temp_titlebasics;
 
 /*
---CREATE TABLE crew
+--CREATE TABLE crew------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE temp_crew (
     tconst VARCHAR(100),
     directors VARCHAR(16000),
