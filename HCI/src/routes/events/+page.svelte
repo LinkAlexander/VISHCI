@@ -65,7 +65,7 @@ const events = {
 
     x.domain([startYear - 5, endYear + 5]);
 
-    xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(10));
+    xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
 
     const totalValues = filteredData.map(d => {
         let total = 0;
