@@ -34,22 +34,22 @@
 <!--			</li>-->
 
 			<li aria-current={$page.url.pathname === '/Map' ? 'page' : undefined}>
-				<a href="/Map">Map</a>
+				<a href="/Map">Country Movie Ratings</a>
 			</li>
 <!--			<li aria-current={$page.url.pathname === '/d3Globe2' ? 'page' : undefined}>-->
 <!--				<a href="/d3Globe2">D3 Globe2</a>-->
 <!--			</li>-->
 			<li aria-current={$page.url.pathname === '/events' ? 'page' : undefined}>
-				<a href="/events">Events</a>
+				<a href="/events">Genres Timeline</a>
 			</li>
-			<li aria-current={$page.url.pathname === '/Balken' ? 'page' : undefined}>
-				<a href="/Balken">Balkendiagramm</a>
-			</li>
+<!--			<li aria-current={$page.url.pathname === '/Balken' ? 'page' : undefined}>-->
+<!--				<a href="/Balken">Balkendiagramm</a>-->
+<!--			</li>-->
 			<li aria-current={$page.url.pathname === '/populationPyramid' ? 'page' : undefined}>
-				<a href="/populationPyramid">Bevölkerungspyramide</a>
+				<a href="/populationPyramid">Living Actors</a>
 			</li>
 			<li aria-current={$page.url.pathname === '/pie' ? 'page' : undefined}>
-				<a href="/pie">Pie</a>
+				<a href="/pie">Professions</a>
 			</li>
 <!--			<li aria-current={$page.url.pathname === '/Scatter' ? 'page' : undefined}>-->
 <!--				<a href="/Scatter">Scatterplot</a>-->
