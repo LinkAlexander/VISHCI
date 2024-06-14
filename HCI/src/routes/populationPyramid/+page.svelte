@@ -70,7 +70,7 @@
 
                 d3.select(tooltip)
                     .style("display", "block")
-                    .html("Person at this age: " + d.male);                
+                    .html("Persons at this age: " + d.male);                
             })
             .on("mousemove", function (event) {
                 // Move the tooltip with the mouse
@@ -102,7 +102,7 @@
 
                 d3.select(tooltip)
                     .style("display", "block")
-                    .html("Person at this age: " + d.female);                
+                    .html("Persons at this age: " + d.female);                
             })
             .on("mousemove", function (event) {
                 // Move the tooltip with the mouse

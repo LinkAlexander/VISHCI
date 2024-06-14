@@ -28,6 +28,7 @@ const events = {
     "Titanic Sinks (1912)": [1912, 1912],
     "World War I (1914 - 1918)": [1914, 1918],
     "Russian Revolution (1917)": [1917, 1917],
+    "Gründung der Sowjetunion(1922)": [1922, 1922],
     "Stock Market Crash (1929)": [1929, 1929],
     "World War II (1939 - 1945)": [1939, 1945],
     "First Nuclear Bomb (1945)": [1945, 1945],
@@ -65,7 +66,7 @@ const events = {
 
     x.domain([startYear - 5, endYear + 5]);
 
-    xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(10).tickFormat(d3.format("d")));
+    xAxis.transition().duration(1000).call(d3.axisBottom(x).ticks(10));
 
     const totalValues = filteredData.map(d => {
         let total = 0;
@@ -135,11 +136,6 @@ function setTooltipHandlers() {
                     });
 
                     tooltipText += `</table>`;
-
-                    tooltip
-                    .html(tooltipText)
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
                 }
 
                 if (get(showRelative)) {
@@ -154,15 +150,32 @@ function setTooltipHandlers() {
                     });
 
                     tooltipText += `</table>`;
-
-                    tooltip
-                    .html(tooltipText)
-                    .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
                 }
+
+                tooltip.html(tooltipText);
+
+                var tooltipWidth = tooltip.node().offsetWidth;
+                var tooltipHeight = tooltip.node().offsetHeight;
+                var svgWidth = width + margin.left + margin.right;
+                var svgHeight = height + margin.top + margin.bottom;
+                
+                var left = event.pageX - tooltipWidth - 10;
+                var top = event.pageY - 28;
+
+                if (left < 0) {
+                    left = event.pageX + 10;
+                }
+
+                if (top + tooltipHeight > svgHeight) {
+                    top = event.pageY - tooltipHeight - 10;
+                }
+
+                tooltip
+                    .style("left", left + "px")
+                    .style("top", top + "px");
             }
         });
-} 
+}
     function updateGenres(event) {
         const genre = event.target.value;
         selectedGenres.update(genres => {
@@ -334,39 +347,38 @@ function setTooltipHandlers() {
 </script>
 
 <style>
-    .myArea {
-        fill-opacity: 0.7;
-    }
-    .tooltip {
-        text-align: left;
-        width: auto;
-        height: auto;
-        padding: 10px;
-        font: 12px sans-serif;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        border: 0px;
-        border-radius: 8px;
-        pointer-events: none;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    }
-    #container {
-        display: flex;
-    }
-    #controls {
-        display: flex;
-        flex-direction: column;
-        margin-right: 20px;
-    }
-    #event-select {
-        margin-bottom: 10px;
-    }
-    .genre-checkbox {
-        margin-bottom: 5px;
-    }
-    #my_dataviz {
-        flex-grow: 1;
-    }
+#container {
+    display: flex;
+    justify-content: center; /* Zentriere den Inhalt horizontal */
+    align-items: center; /* Zentriere den Inhalt vertikal */
+    height: 100vh; /* Nimmt die volle Höhe des Bildschirms ein */
+}
+#controls {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    margin-bottom: 800px;
+}
+
+#event-select {
+    margin-bottom: 10px;
+}
+
+.genre-checkbox {
+    margin-bottom: 10px
+}
+
+#my_dataviz {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center; /* Zentriere das SVG horizontal */
+    align-items: center; /* Zentriere das SVG vertikal */
+}
+
+svg {
+    display: block;
+    margin: auto; /* Stellt sicher, dass das SVG zentriert ist */
+}
 </style>
 
 <div id="container">
