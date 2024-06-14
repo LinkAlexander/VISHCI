@@ -13,13 +13,13 @@
 
     export let data;
 
-    let tempdata = data.genreByYear;
+let tempdata = data.genreByYear;
 
-    const selectedEvent = writable("Complete Timeline");
-    const selectedGenres = writable([]);
+const selectedEvent = writable("Complete Timeline");
+const selectedGenres = writable([]);
 
-    const showAbsolute = writable(true);
-    const showRelative = writable(false);
+const showAbsolute = writable(true);
+const showRelative = writable(false);
 const events = {
     "Complete Timeline (1874 - 2031)": [1874, 2031],
     "First Telephone Call (1876)": [1876, 1876],
@@ -28,7 +28,7 @@ const events = {
     "Titanic Sinks (1912)": [1912, 1912],
     "World War I (1914 - 1918)": [1914, 1918],
     "Russian Revolution (1917)": [1917, 1917],
-    "Gründung der Sowjetunion(1922)": [1922, 1922],
+    "Foundation of the Soviet Union (1922)": [1922, 1922],
     "Stock Market Crash (1929)": [1929, 1929],
     "World War II (1939 - 1945)": [1939, 1945],
     "First Nuclear Bomb (1945)": [1945, 1945],
@@ -50,14 +50,14 @@ const events = {
    
 };
 
-    let svg, x, xAxis, y, yAxis, area, stackedData, tooltip;
-    let movieData = [];
-    let genres = ["drama", "comedy", "talk_Show", "short", "documentary", "romance", "news", "family", "reality_TV", "animation", "unknown", "crime", "action", "adventure", "music", "game_Show", "adult", "sport", "fantasy", "mystery", "horror", "thriller", "history", "biography", "sci_fi", "musical", "war", "western", "film_noir"];
-    let keys;
-    let color;
-    let height, width; // Globale Definition von height und width
+let svg, x, xAxis, y, yAxis, area, stackedData, tooltip;
+let movieData = [];
+let genres = ["drama", "comedy", "talk_Show", "short", "documentary", "romance", "news", "family", "reality_TV", "animation", "unknown", "crime", "action", "adventure", "music", "game_Show", "adult", "sport", "fantasy", "mystery", "horror", "thriller", "history", "biography", "sci_fi", "musical", "war", "western", "film_noir"];
+let keys;
+let color;
+let height, width;
 
- function updateChart(event) {
+function updateChart(event) {
     const selectedOption = event.target.value;
     selectedEvent.set(selectedOption);
     const [startYear, endYear] = events[selectedOption];
@@ -136,6 +136,11 @@ function setTooltipHandlers() {
                     });
 
                     tooltipText += `</table>`;
+
+                    tooltip
+                    .html(tooltipText)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
                 }
 
                 if (get(showRelative)) {
@@ -150,65 +155,49 @@ function setTooltipHandlers() {
                     });
 
                     tooltipText += `</table>`;
+
+                    tooltip
+                    .html(tooltipText)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
                 }
-
-                tooltip.html(tooltipText);
-
-                var tooltipWidth = tooltip.node().offsetWidth;
-                var tooltipHeight = tooltip.node().offsetHeight;
-                var svgWidth = width + margin.left + margin.right;
-                var svgHeight = height + margin.top + margin.bottom;
-                
-                var left = event.pageX - tooltipWidth - 10;
-                var top = event.pageY - 28;
-
-                if (left < 0) {
-                    left = event.pageX + 10;
-                }
-
-                if (top + tooltipHeight > svgHeight) {
-                    top = event.pageY - tooltipHeight - 10;
-                }
-
-                tooltip
-                    .style("left", left + "px")
-                    .style("top", top + "px");
             }
         });
+} 
+
+function updateGenres(event) {
+    const genre = event.target.value;
+    selectedGenres.update(genres => {
+        if (event.target.checked) {
+            return [...genres, genre];
+        } else {
+            return genres.filter(g => g !== genre);
+        }
+    });
+
+    svg.selectAll(".myArea")
+        .transition()
+        .duration(1000)
+        .style("display", d => get(selectedGenres).includes(d.key) ? "initial" : "none");
 }
-    function updateGenres(event) {
-        const genre = event.target.value;
-        selectedGenres.update(genres => {
-            if (event.target.checked) {
-                return [...genres, genre];
-            } else {
-                return genres.filter(g => g !== genre);
-            }
-        });
 
-        svg.selectAll(".myArea")
-            .transition()
-            .duration(1000)
-            .style("display", d => get(selectedGenres).includes(d.key) ? "initial" : "none");
+function toggleAbsolute(event) {
+    showAbsolute.set(event.target.checked);
+    if (event.target.checked) {
+        showRelative.set(false);
+        document.getElementById('relative').checked = false;
     }
+}
 
-    function toggleAbsolute(event) {
-        showAbsolute.set(event.target.checked);
-        if (event.target.checked) {
-            showRelative.set(false);
-            document.getElementById('relative').checked = false;
-        }
+function toggleRelative(event) {
+    showRelative.set(event.target.checked);
+    if (event.target.checked) {
+        showAbsolute.set(false);
+        document.getElementById('absolute').checked = false;
     }
+}
 
-    function toggleRelative(event) {
-        showRelative.set(event.target.checked);
-        if (event.target.checked) {
-            showAbsolute.set(false);
-            document.getElementById('absolute').checked = false;
-        }
-    }
-
-    onMount(() => {
+onMount(() => {
     var margin = { top: 60, right: 230, bottom: 50, left: 50 };
     width = 1200 - margin.left - margin.right;
     height = 800 - margin.top - margin.bottom;
@@ -348,55 +337,68 @@ function setTooltipHandlers() {
 
 <style>
 #container {
-    display: flex;
-    justify-content: center; /* Zentriere den Inhalt horizontal */
-    align-items: center; /* Zentriere den Inhalt vertikal */
-    height: 100vh; /* Nimmt die volle Höhe des Bildschirms ein */
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 }
 #controls {
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
-    margin-bottom: 800px;
+display: flex;
+flex-direction: column;
+margin-right: 20px;
+margin-bottom: 600px;
 }
 
 #event-select {
-    margin-bottom: 10px;
+margin-bottom: 10px;
 }
 
 .genre-checkbox {
-    margin-bottom: 10px
+margin-bottom: 10px
 }
 
 #my_dataviz {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center; /* Zentriere das SVG horizontal */
-    align-items: center; /* Zentriere das SVG vertikal */
+flex-grow: 1;
+display: flex;
+justify-content: center;
+align-items: center;
 }
+.tooltip {
+        text-align: left;
+        width: auto;
+        height: auto;
+        padding: 10px;
+        font: 12px sans-serif;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
 
 svg {
-    display: block;
-    margin: auto; /* Stellt sicher, dass das SVG zentriert ist */
+display: block;
+margin: auto;
 }
 </style>
 
 <div id="container">
-    <div id="controls">
-        <label for="event-select">Select Historical Event:</label>
-        <select id="event-select" on:change={updateChart}>
-            {#each Object.keys(events) as event}
-                <option value="{event}">{event}</option>
-            {/each}
-        </select>
-        <div>
-            <input type="checkbox" id="absolute" on:change={toggleAbsolute} checked>
-            <label for="absolute">Show Absolute Values</label>
-        </div>
-        <div>
-            <input type="checkbox" id="relative" on:change={toggleRelative}>
-            <label for="relative">Show Relative Values</label>
-        </div>
+<div id="controls">
+    <label for="event-select">Select Historical Event:</label>
+    <select id="event-select" on:change={updateChart}>
+        {#each Object.keys(events) as event}
+            <option value="{event}">{event}</option>
+        {/each}
+    </select>
+    <div>
+        <input type="checkbox" id="absolute" on:change={toggleAbsolute} checked>
+        <label for="absolute">Show Absolute Values</label>
     </div>
-    <div id="my_dataviz"></div>
+    <div>
+        <input type="checkbox" id="relative" on:change={toggleRelative}>
+        <label for="relative">Show Relative Values</label>
+    </div>
+</div>
+<div id="my_dataviz"></div>
 </div>
