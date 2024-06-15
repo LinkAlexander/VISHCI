@@ -3,7 +3,6 @@
   import * as d3 from 'd3';
 
   export let data;
-  console.log(data.population);
 
   let data2 = [
       {"age": "100-109", "male": data.population[0][10].count, "female": data.population[1][10].count},
@@ -33,9 +32,6 @@
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
           .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    console.log(Math.max(...data2.map(obj => obj.male)));
-    console.log(Math.max(...data2.map(obj => obj.female)));
 
       const x = d3.scaleLinear()
           .domain([-Math.max(...data2.map(obj => obj.male))-2000, Math.max(...data2.map(obj => obj.female))+2000])
