@@ -192,7 +192,7 @@
             .attr("class", "legend-title")
             .attr("x", -50)
             .attr("y", -20) // position of the title, adjust as needed
-            .text("Durchschnittliches Rating")
+            .text("Average Rating")
         // Create rectangles for each color in scale
         legend.selectAll('rect')
             .data(colorScale.range())
