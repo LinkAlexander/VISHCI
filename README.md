@@ -1,4 +1,4 @@
-# IMD behind the Scenes
+# IMDbehind the Scenes
 ## Team members 
 A Project Jonatan Kunze, Alexander Link, René Meier
 
@@ -78,4 +78,4 @@ NOTE: The database does not have a gender in its schema, however, actors and act
 Hovering over a bar shows a tooltip to show how many persons have been born within the year span and are an actor or an actress respectively
 
 ### Professions
-A pie chart, showing how many people have which profession.
+A pie chart, showing how many people have which profession. The values can be seen by hovering onto the diagram.
