@@ -1,4 +1,4 @@
-# IMD behind the Scenes
+# IMDbehind the Scenes
 ## Team members 
 A Project Jonatan Kunze, Alexander Link, René Meier
 
