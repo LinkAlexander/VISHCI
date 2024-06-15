@@ -65,7 +65,7 @@
           .attr("height", y.bandwidth())
           .attr("fill", "steelblue")
           .on("mouseover", function (event, d) {
-                // Highlight the country on mouseover
+                // Highlight the entry on mouseover
                 d3.select(this).style("fill", "darkgrey");
 
                 d3.select(tooltip)

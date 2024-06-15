@@ -49,14 +49,11 @@
             .attr("d", path)
             .attr("class", "country")
             .style("fill", (d) => getCountryColor(d.id, startYear, endYear))
-            .style("stroke", "black") // this will create the black outline
-            .style("stroke-width", "1px") // this will set the width of the outline
+            .style("stroke", "black")
+            .style("stroke-width", "1px")
             .on("mouseover", function (event, d) {
                 // Highlight the country on mouseover
                 d3.select(this).style("fill", "darkgrey");
-
-                // Show tooltip parseFloat(number.toFixed(3))
-                //const avgValue = parseFloat(findAvgByRegion(findRegionById(d.id)).toFixed(3));
                 let result = findAvgByRegion(findRegionById(d.id), startYear, endYear)
                 let avgValue = result.avg;
                 let count = result.count;
@@ -123,7 +120,7 @@
                     return d.region === region && d.startyear >= startYear && d.startyear <= endYear;
                 } else if (isAdult === 'true') {
                     return d.region === region && d.startyear >= startYear && d.startyear <= endYear && d.isadult;
-                } else { // isAdult === 'false'
+                } else {
                     return d.region === region && d.startyear >= startYear && d.startyear <= endYear && !d.isadult;
                 }
             });
@@ -146,7 +143,7 @@
             // French Southern and Antarctic Lands 260
             // Falkland Islands 238
             // Antarctica 10
-            // Afghanistan 4 - has no movies in imdb
+            // Afghanistan 4
             // Kosovo 999 -- Self assigned code, no official code exists
             if (countryId == 728 ||
                 countryId == 260 ||
@@ -176,7 +173,7 @@
                 '#d9ef8b',
                 '#91cf60',
                 '#1a9850']);
-        // Create legend group
+
         const legend = svgElement.append('g')
             .attr('transform', `translate(${75}, ${height - 200 })`);
         // Add labels
@@ -226,7 +223,6 @@
         }
 
 
-        // Eventlistener für Änderungen an den Eingabefeldern
         document
             .getElementById("minYear")
             .addEventListener("change", function() {
