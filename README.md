@@ -1,6 +1,6 @@
 # IMDbehind the Scenes
 ## Team members 
-A Project Jonatan Kunze, Alexander Link, René Meier
+A Project Jonatan Kunze, Alexander Link, René Maier
 
 ## Used visualization techniques
 - Map in http://localhost:5173/Map
