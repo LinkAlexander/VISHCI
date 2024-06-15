@@ -22,7 +22,7 @@ To find the source code for each individual page, navigate to ./VISHCI/HCI/src/r
 - Node.js (https://nodejs.org/en/download/package-manager)
 
 We used the following Versions:
-- Docker 4.30.0.0
+- Docker Desktop 4.30.0.0
 - Node.js 20.14.0 including npm 10.7.0
 
 ## Instructions
