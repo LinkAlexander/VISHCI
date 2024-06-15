@@ -18,8 +18,8 @@ To find the source code for each individual page, navigate to ./VISHCI/HCI/src/r
 
 # How to get it running
 ## Prerequisites:
-- Docker
-- npm
+- Docker (https://docs.docker.com/get-docker/)
+- Node.js (https://nodejs.org/en/download/package-manager)
 
 ## Instructions
 After cloning the repository, clone the needed docker container (NOTE: this may take a while):
