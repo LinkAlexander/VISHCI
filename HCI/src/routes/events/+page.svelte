@@ -129,7 +129,7 @@ function setTooltipHandlers() {
                 if (get(showAbsolute)) {
                     var tooltipText = `<strong>Absolute</strong><br>`;
                     tooltipText += `Year: ${hoveredYear}<br>`;
-                    tooltipText += `<table><tr><th>Genre</th><th>Anzahl der Filme</th></tr>`;
+                    tooltipText += `<table><tr><th>Genre</th><th># of movies</th></tr>`;
 
                     genreValues.forEach(d => {
                         tooltipText += `<tr><td>${d.genre}</td><td>${d.value}</td></tr>`;
