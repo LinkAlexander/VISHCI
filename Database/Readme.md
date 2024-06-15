@@ -16,7 +16,7 @@ User, Password, Databasename können dem Database-Dockerfile entnommen werden
 
 # Dokumentation
 ## Projekt vorbereiten
-Daten hier runterladen: https://mega.nz/folder/91gjCTKZ#bBwNltiHFoHF3OazdAiz_Q
+Bereinigte Daten hier runterladen: https://mega.nz/folder/91gjCTKZ#bBwNltiHFoHF3OazdAiz_Q
 
 Daten müssen dann wie die title.ratings.tsv abgelegt werden:
 
