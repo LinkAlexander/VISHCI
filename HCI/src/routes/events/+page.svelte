@@ -156,6 +156,7 @@ function setTooltipHandlers() {
 
                     tooltipText += `</table>`;
 
+
                     tooltip
                     .html(tooltipText)
                     .style("left", (event.pageX + 10) + "px")
@@ -392,11 +393,11 @@ margin: auto;
         {/each}
     </select>
     <div>
-        <input type="checkbox" id="absolute" on:change={toggleAbsolute} checked>
+        <input type="radio" id="absolute" on:change={toggleAbsolute} checked>
         <label for="absolute">Show Absolute Values</label>
     </div>
     <div>
-        <input type="checkbox" id="relative" on:change={toggleRelative}>
+        <input type="radio" id="relative" on:change={toggleRelative}>
         <label for="relative">Show Relative Values</label>
     </div>
 </div>
