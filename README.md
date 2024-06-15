@@ -14,7 +14,7 @@ https://datasets.imdbws.com/
 https://svelte.dev/
 https://d3js.org/
 
-To find the source code for each individual page, navigate to ./VISHCI/HCI/src/routes/ to the folders events, Map, pie, orpopulationPyramid
+To find the source code for each individual page, navigate to ./VISHCI/HCI/src/routes/ to the folders events, Map, pie, or populationPyramid
 
 # How to get it running
 ## Prerequisites:
