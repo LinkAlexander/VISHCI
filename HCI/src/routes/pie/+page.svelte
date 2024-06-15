@@ -3,7 +3,8 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
   export let data;
-  console.log(data);
+
+  var tooltip;
 
   // Sample data for the pie chart
   data = data.result;
@@ -39,15 +40,20 @@
       .append("path")
       .attr("d", arc)
       .attr("fill", (d, i) => color(i))
-      .append("title") // Add title element for tooltip
-      .text((d) => "Profession = " + d.data.profession +"\nCount = " + d.data.count); // Show count property as tooltip
-
-    // Adding labels
-    arcs
-      .append("text")
-      .attr("transform", (d) => `translate(${arc.centroid(d)})`)
-      .attr("dy", "0.35em")
-      .text("");
+      .on("mouseover", function (event, d) {
+        d3.select(tooltip)
+          .style("display", "block")
+          .html("Profession = " + d.data.profession +"<br>Count = " + d.data.count);
+      })
+      .on("mousemove", function (event) {
+        // Move the tooltip with the mouse
+        d3.select(tooltip)
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 15 + "px");
+      })
+      .on("mouseout", function (event, d) {
+        d3.select(tooltip).style("display", "none");
+      });
   }
 
   // Call drawPieChart on component mount
@@ -57,9 +63,20 @@
 <h1>People and their profession</h1>
 
 <div class="pie-chart-container"></div>
+<div bind:this={tooltip} class="tooltip" style="display: none;"></div>
 
 <style>
   .pie-chart-container {
     text-align: center;
+  }
+  .tooltip {
+    position: absolute;
+    padding: 5px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    pointer-events: none;
+    font-size: 12px;
+    color: #333;
   }
 </style>
