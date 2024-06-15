@@ -8,7 +8,9 @@
 
   // Sample data for the pie chart
   data = data.result;
-
+data.forEach(element => {
+  console.log(element.profession);
+});
   // Function to draw the pie chart
   function drawPieChart() {
     const width = 600;
@@ -71,165 +73,195 @@
   <div class="legend">
     <div class="legend-item">
       <div class="color-box c1"></div>
-      <span>612</span>
+      <span>actor</span>
     </div>
     <div class="legend-item">
       <div class="color-box c2"></div>
-      <span>813</span>
+      <span>no profession</span>
     </div>
     <div class="legend-item">
       <div class="color-box c3"></div>
-      <span>213</span>
+      <span>actress</span>
     </div>
     <div class="legend-item">
       <div class="color-box c4"></div>
-      <span>142</span>
+      <span>miscellaneous</span>
     </div>
     <div class="legend-item">
       <div class="color-box c5"></div>
-      <span>231</span>
+      <span>producer </span>
     </div>
     <div class="legend-item">
       <div class="color-box c6"></div>
-      <span>231</span>
+      <span>writer </span>
     </div>
     <div class="legend-item">
       <div class="color-box c7"></div>
-      <span>231</span>
+      <span>camera_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c8"></div>
-      <span>231</span>
+      <span>director </span>
     </div>
     <div class="legend-item">
       <div class="color-box c9"></div>
-      <span>231</span>
+      <span>art_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c10"></div>
-      <span>231</span>
+      <span>sound_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c1"></div>
-      <span>612</span>
+      <span>cinematographer </span>
     </div>
     <div class="legend-item">
       <div class="color-box c2"></div>
-      <span>813</span>
+      <span>editor </span>
     </div>
     <div class="legend-item">
       <div class="color-box c3"></div>
-      <span>213</span>
+      <span>composer </span>
     </div>
     <div class="legend-item">
       <div class="color-box c4"></div>
-      <span>142</span>
+      <span>music_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c5"></div>
-      <span>231</span>
+      <span>assistant_director </span>
     </div>
     <div class="legend-item">
       <div class="color-box c6"></div>
-      <span>231</span>
+      <span>visual_effects </span>
     </div>
     <div class="legend-item">
       <div class="color-box c7"></div>
-      <span>231</span>
+      <span>make_up_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c8"></div>
-      <span>231</span>
+      <span>animation_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c9"></div>
-      <span>231</span>
+      <span>production_manager </span>
     </div>
     <div class="legend-item">
       <div class="color-box c10"></div>
-      <span>231</span>
+      <span>archive_footage </span>
     </div>
   </div>
   <div class="legend">
     <div class="legend-item">
       <div class="color-box c1"></div>
-      <span>612</span>
+      <span>editorial_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c2"></div>
-      <span>813</span>
+      <span>costume_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c3"></div>
-      <span>213</span>
+      <span>soundtrack </span>
     </div>
     <div class="legend-item">
       <div class="color-box c4"></div>
-      <span>142</span>
+      <span>transportation_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c5"></div>
-      <span>231</span>
+      <span>art_director </span>
     </div>
     <div class="legend-item">
       <div class="color-box c6"></div>
-      <span>231</span>
+      <span>stunts </span>
     </div>
     <div class="legend-item">
       <div class="color-box c7"></div>
-      <span>231</span>
+      <span>script_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c8"></div>
-      <span>231</span>
+      <span>location_management </span>
     </div>
     <div class="legend-item">
       <div class="color-box c9"></div>
-      <span>231</span>
+      <span>production_designer </span>
     </div>
     <div class="legend-item">
       <div class="color-box c10"></div>
-      <span>231</span>
+      <span>costume_designer </span>
     </div>
     <div class="legend-item">
       <div class="color-box c1"></div>
-      <span>612</span>
+      <span>special_effects </span>
     </div>
     <div class="legend-item">
       <div class="color-box c2"></div>
-      <span>813</span>
+      <span>casting_department </span>
     </div>
     <div class="legend-item">
       <div class="color-box c3"></div>
-      <span>213</span>
+      <span>set_decorator </span>
     </div>
     <div class="legend-item">
       <div class="color-box c4"></div>
-      <span>142</span>
+      <span>executive </span>
     </div>
     <div class="legend-item">
       <div class="color-box c5"></div>
-      <span>231</span>
+      <span>casting_director </span>
     </div>
     <div class="legend-item">
       <div class="color-box c6"></div>
-      <span>231</span>
+      <span>manager </span>
     </div>
     <div class="legend-item">
       <div class="color-box c7"></div>
-      <span>231</span>
+      <span>talent_agent </span>
     </div>
     <div class="legend-item">
       <div class="color-box c8"></div>
-      <span>231</span>
+      <span>music_artist </span>
     </div>
     <div class="legend-item">
       <div class="color-box c9"></div>
-      <span>231</span>
+      <span>archive_sound </span>
     </div>
     <div class="legend-item">
       <div class="color-box c10"></div>
-      <span>231</span>
+      <span>legal </span>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item">
+      <div class="color-box c1"></div>
+      <span>publicist </span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box c2"></div>
+      <span>assistant </span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box c3"></div>
+      <span>podcaster </span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box c4"></div>
+      <span>production_department </span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box c5"></div>
+      <span>choreographer </span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box c6"></div>
+      <span>electrical_department </span>
+    </div>
+    <div class="legend-item">
+      <div class="color-box c7"></div>
+      <span>accountant </span>
     </div>
   </div>
 </div>
