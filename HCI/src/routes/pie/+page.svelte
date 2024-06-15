@@ -11,8 +11,8 @@
 
   // Function to draw the pie chart
   function drawPieChart() {
-    const width = 500;
-    const height = 500;
+    const width = 600;
+    const height = 600;
     const radius = Math.min(width, height) / 2;
 
     const color = d3.scaleOrdinal().range(d3.schemeCategory10);
