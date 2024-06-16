@@ -8,9 +8,7 @@
 
   // Sample data for the pie chart
   data = data.result;
-data.forEach(element => {
-  console.log(element.profession);
-});
+
   // Function to draw the pie chart
   function drawPieChart() {
     const width = 600;

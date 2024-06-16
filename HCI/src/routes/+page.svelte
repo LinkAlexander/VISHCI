@@ -1,7 +1,5 @@
 <script>
-	import Counter from "./Counter.svelte";
 	import intro from "$lib/images/home.png";
-	import intro_fallback from "$lib/images/intro_fallback.png";
 </script>
 
 <svelte:head>
@@ -14,7 +12,7 @@
 		<span class="welcome">
 			<picture>
 				<source srcset={intro} type="image/webp" />
-				<img src={intro_fallback} alt="Intro" />
+				<img src={intro} alt="Intro" />
 			</picture>
 		</span>
 		<br />
