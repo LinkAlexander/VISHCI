@@ -10,9 +10,10 @@ A Project Jonatan Kunze, Alexander Link, René Maier
 
 ## Source of Data
 Data courtesy of IMDb
+
 https://datasets.imdbws.com/
 
-The picture at the home page is AI generated an can be seen here: https://www.bing.com/images/create/three-people-stand-on-the-stage-and-look-into-the-/1-666f5b30027245058a28feb4372e4446?id=YBT878kt%2fK8w6qV%2bdpeIwQ%3d%3d&view=detailv2&idpp=genimg&thId=OIG1.CTyT0YuwOhF8X83LDRnh&FORM=GCRIDP&mode=overlay
+The picture at the homepage is AI generated an can be seen here: https://www.bing.com/images/create/three-people-stand-on-the-stage-and-look-into-the-/1-666f5b30027245058a28feb4372e4446?id=YBT878kt%2fK8w6qV%2bdpeIwQ%3d%3d&view=detailv2&idpp=genimg&thId=OIG1.CTyT0YuwOhF8X83LDRnh&FORM=GCRIDP&mode=overlay
 ## Source of Code
 https://svelte.dev/
 https://d3js.org/
