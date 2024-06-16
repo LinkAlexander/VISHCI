@@ -1,7 +1,7 @@
 <script>
-	import Counter from './Counter.svelte';
-	import intro from '$lib/images/Intro.webp';
-	import intro_fallback from '$lib/images/intro_fallback.png';
+	import Counter from "./Counter.svelte";
+	import intro from "$lib/images/home.png";
+	import intro_fallback from "$lib/images/intro_fallback.png";
 </script>
 
 <svelte:head>
@@ -10,8 +10,6 @@
 </svelte:head>
 
 <section>
-
-	
 	<h1>
 		<span class="welcome">
 			<picture>
@@ -20,9 +18,10 @@
 			</picture>
 		</span>
 		<br />
-		IMDbehind the Scenes<br /> a Jonatan, Alexander and René App
+		IMDbehind the Scenes<br /> a Jonatan, Alexander and René App<br />
+		<p style="font-size: 1.2rem;">Data courtesy of IMDb</p>
 	</h1>
- <!--		
+	<!--		
 	
 	<h2>
 		try editing <strong>src/routes/+page.svelte</strong>
@@ -50,7 +49,7 @@
 		position: relative;
 		width: 100%;
 		height: 0;
-		padding: 0 0 calc(100% * 495 / 900	) 0;
+		padding: 0 0 calc(100% * 495 / 900) 0;
 	}
 
 	.welcome img {
